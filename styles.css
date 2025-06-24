@@ -202,7 +202,7 @@ body {
 }
 
 .green-studio {
-    background: linear-gradient(45deg, #ffa500, #ff8c00);
+    /* バックグラウンドはHTMLで直接指定 */
 }
 
 /* レスポンシブデザイン */
