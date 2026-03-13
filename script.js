@@ -79,9 +79,56 @@ function updateNewsFeed(data) {
     `).join('');
 }
 
+// Dynamic Live Schedule
+const liveData = [
+    {
+        date: '2026.04.15',
+        day: 'WED',
+        title: 'キヨシ弾き語りナイト vol.1',
+        venue: '心斎橋アメリカ村 GREEN STUDIO',
+        ticket: 'https://sabotenrock.com/contact/'
+    },
+    {
+        date: '2026.05.02',
+        day: 'SAT',
+        title: 'アコースティック・ジャーニー 2026',
+        venue: '大阪 ライブハウス某所',
+        ticket: 'https://sabotenrock.com/contact/'
+    },
+    {
+        date: '2026.05.20',
+        day: 'WED',
+        title: 'キヨシ一門 門下生限定ライブ',
+        venue: '心斎橋アメリカ村 GREEN STUDIO',
+        ticket: 'https://sabotenrock.com/contact/'
+    }
+];
+
+function updateLiveSchedule(data) {
+    const liveGrid = document.querySelector('.live-grid');
+    if (!liveGrid) return;
+
+    liveGrid.innerHTML = data.map(item => `
+        <div class="live-card">
+            <div class="live-date-box">
+                <span class="live-date">${item.date}</span>
+                <span class="live-day">${item.day}</span>
+            </div>
+            <div class="live-info">
+                <h3 class="live-title">${item.title}</h3>
+                <p class="live-venue">${item.venue}</p>
+            </div>
+            <div class="live-status">
+                <a href="${item.ticket}" target="_blank" class="ticket-btn">TICKET</a>
+            </div>
+        </div>
+    `).join('');
+}
+
 // Initialize News Feed
 document.addEventListener('DOMContentLoaded', () => {
     updateNewsFeed(newsData);
+    updateLiveSchedule(liveData);
 });
 
 // Observe sections for scroll animations
