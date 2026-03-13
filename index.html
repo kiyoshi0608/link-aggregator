@@ -1,52 +1,380 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>キヨシ|SABOTEN</title>
-    <link rel="stylesheet" href="styles.css">
-    <meta name="description" content="SABOTENのギターボーカルであり、音楽スタジオGREEN STUDIOのオーナー、キヨシの公式リンク集">
+    <meta name="description" content="キヨシ（KIYOSHI KAWAMATA）公式サイト - リニューアル版">
+    <meta name="keywords" content="川真田清,KIYOSHI KAWAMATA,SABOTEN,キヨシ,GREEN STUDIO,大阪,メロディックパンク,キヨシ一門">
+    <title>KIYOSHI KAWAMATA official website</title>
+    <link rel="stylesheet" href="styles.css?v=202511251733">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Montserrat:wght@700;900&family=Patrick+Hand&family=Permanent+Marker&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <div class="theme-toggle">
-        <button id="theme-toggle" aria-label="ダークモード切り替え">
-            <span class="sun">☀️</span>
-            <span class="moon">🌙</span>
-        </button>
-    </div>
-    <div class="container">
-        <div class="profile">
-            <img src="https://i.imgur.com/eivkgQT.jpeg" alt="キヨシ">
-            <h1>キヨシ</h1>
-            <p>バンドSABOTENのギターボーカルで、大阪心斎橋で音楽スタジオGREEN STUDIOをやらせていただいています！</p>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">KIYOSHI KAWAMATA<br><span>official website</span></div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#hero" class="nav-link">HOME</a></li>
+                <li><a href="#news" class="nav-link">NEWS</a></li>
+                <li><a href="#profile" class="nav-link">PROFILE</a></li>
+                <li><a href="#saboten" class="nav-link">SABOTEN</a></li>
+                <li><a href="#studio" class="nav-link">GREEN STUDIO</a></li>
+                <li><a href="#contact" class="nav-link">CONTACT</a></li>
+            </ul>
         </div>
-        <div class="links">
-            <a href="https://twitter.com/kiyoshi_saboten" class="twitter" target="_blank" rel="noopener noreferrer">
-                <span class="icon">X</span>
-                <span class="label">Twitter</span>
-            </a>
-            <a href="https://instagram.com/kiyoshi.saboten.greenstudio" class="instagram" target="_blank" rel="noopener noreferrer">
-                <span class="icon">📷</span>
-                <span class="label">Instagram</span>
-            </a>
-            <a href="https://www.youtube.com/@%E3%82%AD%E3%83%A8%E3%82%B7%E4%B8%80%E9%96%80" class="youtube" target="_blank" rel="noopener noreferrer">
-                <span class="icon">🎥</span>
-                <span class="label">YouTube</span>
-            </a>
-            <a href="https://www.tiktok.com/@kiyoshi_saboten" class="tiktok" target="_blank" rel="noopener noreferrer">
-                <span class="icon">🎬</span>
-                <span class="label">TikTok</span>
-            </a>
-            <a href="https://sabotenrock.com/" class="saboten" target="_blank" rel="noopener noreferrer">
-                <span class="icon">🌵</span>
-                <span class="label">SABOTEN</span>
-            </a>
-            <a href="http://www.greenmusicstudio.jp/" class="green-studio" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(45deg, #ffa500, #ff8c00) !important;">
-                <span class="icon">🎵</span>
-                <span class="label">GREEN STUDIO</span>
-            </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-bg-container">
+            <img src="images/kiyoshi_profile.jp.jpg" alt="KIYOSHI KAWAMATA" class="hero-main-img">
         </div>
-    </div>
+        <div class="hero-content">
+            <div class="hero-text-content">
+                <h1 class="hero-title">
+                    KIYOSHI<br>KAWAMATA
+                </h1>
+            </div>
+        </div>
+        <div class="scroll-down">
+            <span>SCROLL</span>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="section news-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">NEWS</h2>
+                <p class="section-subtitle">最新情報</p>
+            </div>
+            <div class="news-grid">
+                <!-- News items will be injected by JS -->
+            </div>
+            <div class="news-more">
+                <a href="https://twitter.com/kiyoshi_saboten" target="_blank" rel="noopener noreferrer"
+                    class="more-btn">
+                    CHECK MORE ON X
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" class="section profile-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">PROFILE</h2>
+                <p class="section-subtitle">キヨシ / KIYOSHI KAWAMATA</p>
+            </div>
+            <div class="profile-content">
+                <div class="profile-image-container">
+                    <div class="profile-image-frame">
+                        <img src="images/kiyoshi_profile.jp.jpg" alt="SABOTENキヨシ イラスト" class="profile-image">
+                    </div>
+                </div>
+                <div class="profile-cards">
+                    <div class="profile-card">
+                        <h3>アーティスト</h3>
+                        <p>SABOTENの唯一のオリジナルメンバーとして、1999年の結成から現在まで第一線で活動を続ける。バンドの全楽曲の作詞・作曲を手がけ、ボーカル＆ギターとしてバンドサウンドの中核を担う。</p>
+                        <p>メロディックパンクというジャンルにおいて、日本語詞の力強さと繊細さを両立させた独自のスタイルを確立。ライブハウスを中心とした精力的なツアー活動により、全国に熱狂的なファンベースを築き上げている。
+                        </p>
+                    </div>
+                    <div class="profile-card">
+                        <h3>キヨシ一門</h3>
+                        <p>個人としても「キヨシ一門」としてYouTubeチャンネルやstand.fmでの配信、SNS（X、Instagram、TikTok）を通じて幅広く活動中。音楽活動だけでなく、日常の様々なコンテンツを発信している。
+                        </p>
+                    </div>
+                    <div class="profile-card">
+                        <h3>スタジオオーナー</h3>
+                        <p>2013年、大阪・心斎橋アメリカ村にGREEN STUDIOを開設。現役ミュージシャンとしての経験を活かし、音作りにこだわる全てのアーティストのための理想的な環境を提供している。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SABOTEN Section -->
+    <section id="saboten" class="section saboten-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">SABOTEN</h2>
+                <p class="section-subtitle">3-Piece Melodic Punk Band from Osaka</p>
+            </div>
+            <div class="saboten-content">
+                <div class="saboten-info">
+                    <div class="info-card">
+                        <h3>バンドについて</h3>
+                        <p>1999年、大阪府門真市で結成された3ピースメロディックパンクバンド。ハイテンションなライブパフォーマンスと、心に響く日本語詞のメロディックサウンドで多くのファンを魅了し続けている。
+                        </p>
+                        <p>2004年、ソニーミュージックレコーズよりメジャーデビュー。代表曲「シナリオ」はアニメ『NARUTO -ナルト-』のエンディングテーマに起用され、全国的な知名度を獲得。</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>メンバー</h3>
+                        <ul class="member-list">
+                            <li><strong>キヨシ</strong> - Vocal & Guitar</li>
+                            <li><strong>ヤッソー</strong> - Bass & Chorus</li>
+                            <li><strong>サケ</strong> - Drums & Chorus</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>代表曲</h3>
+                        <ul class="song-list">
+                            <li>シナリオ（アニメ「NARUTO」EDテーマ）</li>
+                            <li>おくりもの（メジャーデビューシングル）</li>
+                            <li>その他多数のアルバム・シングルをリリース</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="saboten-links">
+                    <a href="https://sabotenrock.com" target="_blank" rel="noopener noreferrer" class="link-btn">
+                        <span>公式サイト</span>
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor"
+                                d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5c-1.11 0-2 .89-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/SABOTENofficial" target="_blank" rel="noopener noreferrer"
+                        class="link-btn">
+                        <span>X (Twitter)</span>
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor"
+                                d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5c-1.11 0-2 .89-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Photo Gallery -->
+            <div class="saboten-gallery">
+                <h3 class="gallery-title">LIVE PHOTOS</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="images/SABOTENIMG_7608.JPG" alt="SABOTEN ライブ写真" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/SABOTENIMG_7865.JPG" alt="SABOTEN ライブ写真" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/SABOTENIMG_7867.JPG" alt="SABOTEN ライブ写真" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/SABOTENIMG_7869.JPG" alt="SABOTEN ライブ写真" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/SABOTENIMG_7870.JPG" alt="SABOTEN ライブ写真" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/SABOTENIMG_8570.JPG" alt="SABOTEN ライブ写真" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- GREEN STUDIO Section -->
+    <section id="studio" class="section studio-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">GREEN STUDIO</h2>
+                <p class="section-subtitle">Music Rehearsal Studio in Osaka</p>
+            </div>
+            <div class="studio-content">
+                <div class="studio-main">
+                    <div class="studio-card">
+                        <h3>コンセプト</h3>
+                        <p>現役ミュージシャンがプロデュースする、アーティストのためのスタジオ。機材、音響設計、空間デザインの全てにこだわり、創作意欲を最大限に引き出す環境を実現しています。</p>
+                    </div>
+                    <div class="studio-info-grid">
+                        <div class="studio-info-card">
+                            <div class="icon">📍</div>
+                            <h4>所在地</h4>
+                            <p>大阪府大阪市中央区西心斎橋2-10-15<br>心斎橋ロジック地下1階</p>
+                            <p class="small">大阪メトロ四つ橋線「四ツ橋駅」徒歩6分</p>
+                        </div>
+                        <div class="studio-info-card">
+                            <div class="icon">🎸</div>
+                            <h4>設備</h4>
+                            <p>5つのリハーサルルーム（A～Eスタジオ）</p>
+                            <p>ハイエンド＆レア機材完備</p>
+                            <p>ORANGE、Diezelアンプ常設</p>
+                        </div>
+                        <div class="studio-info-card">
+                            <div class="icon">💰</div>
+                            <h4>料金</h4>
+                            <p>個人練習：550円/時間～</p>
+                            <p>バンド練習：1,800円/時間～</p>
+                            <p class="small">※詳細は公式サイトをご確認ください</p>
+                        </div>
+                        <div class="studio-info-card">
+                            <div class="icon">🎵</div>
+                            <h4>サービス</h4>
+                            <p>リハーサルスタジオ</p>
+                            <p>マンツーマンレッスン</p>
+                            <p>機材レンタル</p>
+                        </div>
+                    </div>
+                    <div class="studio-features">
+                        <h3>特徴</h3>
+                        <ul>
+                            <li>デッドすぎずライブすぎない、絶妙な音響設計</li>
+                            <li>ORANGE、Diezelなどハイエンドアンプ常設</li>
+                            <li>dw、Canopusドラムセット完備</li>
+                            <li>清潔感とデザイン性を両立した快適空間</li>
+                            <li>年中無休営業（年末年始除く）</li>
+                            <li>各種キャッシュレス決済対応</li>
+                        </ul>
+                    </div>
+                    <div class="studio-buttons">
+                        <a href="http://www.greenmusicstudio.jp/" target="_blank" rel="noopener noreferrer"
+                            class="studio-btn">
+                            <span>公式サイト</span>
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <path fill="currentColor"
+                                    d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5c-1.11 0-2 .89-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z" />
+                            </svg>
+                        </a>
+                        <a href="https://studi-ol.com/shop/546?fw=greenmusicstudio#room_schedule" target="_blank"
+                            rel="noopener noreferrer" class="studio-btn studio-btn-secondary">
+                            WEB予約
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <path fill="currentColor"
+                                    d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Studio Gallery -->
+                    <div class="studio-gallery">
+                        <h3 class="gallery-title">STUDIO PHOTOS</h3>
+                        <div class="gallery-grid studio-grid">
+                            <div class="gallery-item">
+                                <img src="images/GREEN STUDIOIMG_8572.JPG" alt="GREEN STUDIO 内観" loading="lazy">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="images/GREEN STUDIOimg_bst_b01-01.JPG" alt="GREEN STUDIO Bスタジオ"
+                                    loading="lazy">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="images/GREEN STUDIOimg_cst_b04-01.JPG" alt="GREEN STUDIO Cスタジオ"
+                                    loading="lazy">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="images/GREEN STUDIOimg_est_b02-01.JPG" alt="GREEN STUDIO Eスタジオ"
+                                    loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="studio-social">
+                        <a href="https://twitter.com/Greenmusicstd" target="_blank" rel="noopener noreferrer"
+                            class="social-link">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <path fill="currentColor"
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                            <span>@Greenmusicstd</span>
+                        </a>
+                        <a href="https://instagram.com/greenmusicstd" target="_blank" rel="noopener noreferrer"
+                            class="social-link">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <path fill="currentColor"
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                            <span>@greenmusicstd</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">CONTACT</h2>
+                <p class="section-subtitle">お問い合わせ</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-card">
+                    <h3>SABOTEN</h3>
+                    <p>バンド活動、ライブ情報に関するお問い合わせ</p>
+                    <a href="https://sabotenrock.com/contact/" target="_blank" rel="noopener noreferrer"
+                        class="contact-link">
+                        公式サイトお問い合わせフォーム
+                    </a>
+                </div>
+                <div class="contact-card">
+                    <h3>GREEN STUDIO</h3>
+                    <p>スタジオ予約、レッスンに関するお問い合わせ</p>
+                    <div class="contact-links">
+                        <a href="https://studi-ol.com/shop/546?fw=greenmusicstudio#room_schedule" target="_blank"
+                            rel="noopener noreferrer" class="contact-link">
+                            WEB予約
+                        </a>
+                        <a href="http://www.greenmusicstudio.jp/" target="_blank" rel="noopener noreferrer"
+                            class="contact-link contact-link-secondary">
+                            公式サイト
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>KIYOSHI KAWAMATA</h3>
+                    <p>キヨシ 公式サイト</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Links</h4>
+                        <ul>
+                            <li><a href="https://sabotenrock.com" target="_blank" rel="noopener noreferrer">SABOTEN
+                                    Official</a></li>
+                            <li><a href="http://www.greenmusicstudio.jp/" target="_blank"
+                                    rel="noopener noreferrer">GREEN STUDIO</a></li>
+                            <li><a href="https://www.youtube.com/@キヨシ一門" target="_blank" rel="noopener noreferrer">キヨシ一門
+                                    YouTube</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>SNS</h4>
+                        <ul>
+                            <li><a href="https://twitter.com/kiyoshi_saboten" target="_blank"
+                                    rel="noopener noreferrer">X (Twitter)</a></li>
+                            <li><a href="https://instagram.com/kiyoshi.saboten.greenstudio" target="_blank"
+                                    rel="noopener noreferrer">Instagram</a></li>
+                            <li><a href="https://www.tiktok.com/@kiyoshi_saboten" target="_blank"
+                                    rel="noopener noreferrer">TikTok</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Kiyoshi Kawamata (キヨシ). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
+
 </html>

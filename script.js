@@ -1,32 +1,102 @@
-// ダークモードの切り替え
-const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
+// Hamburger Menu Toggle
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.getElementById('nav-menu');
 
-// ローカルストレージからテーマを読み込み
-const savedTheme = localStorage.getItem('theme') || 'light';
-body.setAttribute('data-theme', savedTheme);
-
-// ダークモードトグルの初期状態を設定
-if (savedTheme === 'dark') {
-    themeToggle.querySelector('.sun').style.opacity = '0';
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        menuToggle.classList.toggle('open');
+    });
 }
 
-themeToggle.addEventListener('click', () => {
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    
-    // アイコンの切り替え
-    themeToggle.querySelector('.sun').style.opacity = newTheme === 'light' ? '1' : '0';
-    themeToggle.querySelector('.moon').style.opacity = newTheme === 'light' ? '0' : '1';
+// Close menu when clicking links
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+    });
 });
 
-// リンククリック時の処理
-document.querySelectorAll('.links a').forEach(link => {
-    link.addEventListener('click', (e) => {
+// Smooth scroll behavior
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        window.open(link.href, '_blank');
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
+});
+
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 100) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+// Dynamic news feed
+const newsData = [
+    {
+        platform: 'info',
+        date: '2025.11.25',
+        content: 'GREEN STUDIO、12月のスタジオ予約受付中！年末に向けてバンド練習はいかがですか？'
+    },
+    {
+        platform: 'twitter',
+        date: '2025.11.20',
+        content: 'SABOTENの新しいライブ情報は公式サイトをチェック！全国ツアー計画中です🎸'
+    },
+    {
+        platform: 'youtube',
+        date: '2025.11.15',
+        content: 'キヨシ一門YouTubeチャンネル更新中！音楽トークや弾き語り動画をアップしています🎵'
+    },
+    {
+        platform: 'instagram',
+        date: '2025.11.10',
+        content: 'GREEN STUDIOの新しい機材が入荷しました📸 Instagramで写真公開中！'
+    }
+];
+
+function updateNewsFeed(data) {
+    const newsGrid = document.querySelector('.news-grid');
+    if (!newsGrid) return;
+
+    newsGrid.innerHTML = data.map(item => `
+        <div class="news-card">
+            <div class="news-header">
+                <span class="news-date">${item.date}</span>
+                <span class="news-platform">${item.platform}</span>
+            </div>
+            <p class="news-content">${item.content}</p>
+        </div>
+    `).join('');
+}
+
+// Initialize News Feed
+document.addEventListener('DOMContentLoaded', () => {
+    updateNewsFeed(newsData);
+});
+
+// Observe sections for scroll animations
+const observerOptions = {
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('appeared');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.section').forEach(section => {
+    observer.observe(section);
 });
