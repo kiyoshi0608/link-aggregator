@@ -41,40 +41,26 @@ window.addEventListener('scroll', () => {
 });
 
 // Dynamic news feed
-const newsData = [
-    {
-        platform: 'info',
-        date: '2025.11.25',
-        content: 'GREEN STUDIO、12月のスタジオ予約受付中！年末に向けてバンド練習はいかがですか？'
-    },
-    {
-        platform: 'twitter',
-        date: '2025.11.20',
-        content: 'SABOTENの新しいライブ情報は公式サイトをチェック！全国ツアー計画中です🎸'
-    },
-    {
-        platform: 'youtube',
-        date: '2025.11.15',
-        content: 'キヨシ一門YouTubeチャンネル更新中！音楽トークや弾き語り動画をアップしています🎵'
-    },
-    {
-        platform: 'instagram',
-        date: '2025.11.10',
-        content: 'GREEN STUDIOの新しい機材が入荷しました📸 Instagramで写真公開中！'
-    }
-];
+const newsData = [];
 
 function updateNewsFeed(data) {
+    const newsSection = document.getElementById('news');
     const newsGrid = document.querySelector('.news-grid');
-    if (!newsGrid) return;
+    if (!newsGrid || !newsSection) return;
 
+    if (data.length === 0) {
+        newsSection.style.display = 'none';
+        return;
+    }
+
+    newsSection.style.display = 'block';
     newsGrid.innerHTML = data.map(item => `
         <div class="news-card">
             <div class="news-header">
                 <span class="news-date">${item.date}</span>
-                <span class="news-platform">${item.platform}</span>
+                <span class="news-tag">${item.tag}</span>
             </div>
-            <p class="news-content">${item.content}</p>
+            <p class="news-title"><a href="${item.link}" target="_blank">${item.title}</a></p>
         </div>
     `).join('');
 }
@@ -86,7 +72,7 @@ const liveData = [
         day: 'SAT',
         title: '『酔いどれ祭り2026』',
         venue: '阪急庄内駅前東ストリート',
-        ticket: 'https://sabotenrock.com/live/%e3%80%8e%e9%85%94%e3%81%84%e3%81%a9%e3%82%8c%e7%a5%ad%e3%82%8a2026%e3%80%8f/'
+        ticket: 'https://sabotenrock.com/live/'
     },
     {
         date: '2026.04.20',
