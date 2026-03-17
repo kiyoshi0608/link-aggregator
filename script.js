@@ -82,25 +82,18 @@ function updateNewsFeed(data) {
 // Dynamic Live Schedule
 const liveData = [
     {
-        date: '2026.04.15',
-        day: 'WED',
-        title: 'キヨシ弾き語りナイト vol.1',
-        venue: '心斎橋アメリカ村 GREEN STUDIO',
-        ticket: 'https://sabotenrock.com/contact/'
-    },
-    {
-        date: '2026.05.02',
+        date: '2026.04.04',
         day: 'SAT',
-        title: 'アコースティック・ジャーニー 2026',
-        venue: '大阪 ライブハウス某所',
-        ticket: 'https://sabotenrock.com/contact/'
+        title: '『酔いどれ祭り2026』',
+        venue: '阪急庄内駅前東ストリート',
+        ticket: 'https://sabotenrock.com/live/%e3%80%8e%e9%85%94%e3%81%84%e3%81%a9%e3%82%8c%e7%a5%ad%e3%82%8a2026%e3%80%8f/'
     },
     {
-        date: '2026.05.20',
-        day: 'WED',
-        title: 'キヨシ一門 門下生限定ライブ',
-        venue: '心斎橋アメリカ村 GREEN STUDIO',
-        ticket: 'https://sabotenrock.com/contact/'
+        date: '2026.04.20',
+        day: 'MON',
+        title: '「よしきときよしvol.1」',
+        venue: '京都 音まかす',
+        ticket: 'https://tiget.net/events/470983'
     }
 ];
 
