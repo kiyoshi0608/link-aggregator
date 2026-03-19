@@ -12,7 +12,8 @@ if (menuToggle) {
 // Close menu when clicking links
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
+        if (navMenu) navMenu.classList.remove('active');
+        if (menuToggle) menuToggle.classList.remove('open');
     });
 });
 
@@ -41,11 +42,18 @@ window.addEventListener('scroll', () => {
 });
 
 // Dynamic news feed
-const newsData = [];
+const newsData = [
+    {
+        date: '2026.03.19',
+        tag: 'LIVE',
+        title: '2026.04.25「CAMP ROCK FRIENDS vol.6」出演決定！',
+        link: '#live'
+    }
+];
 
 function updateNewsFeed(data) {
-    const newsSection = document.getElementById('news');
     const newsGrid = document.querySelector('.news-grid');
+    const newsSection = document.getElementById('news');
     if (!newsGrid || !newsSection) return;
 
     if (data.length === 0) {
@@ -60,7 +68,7 @@ function updateNewsFeed(data) {
                 <span class="news-date">${item.date}</span>
                 <span class="news-tag">${item.tag}</span>
             </div>
-            <p class="news-title"><a href="${item.link}" target="_blank">${item.title}</a></p>
+            <p class="news-title"><a href="${item.link}">${item.title}</a></p>
         </div>
     `).join('');
 }
@@ -80,6 +88,13 @@ const liveData = [
         title: '「よしきときよしvol.1」',
         venue: '京都 音まかす',
         ticket: 'https://tiget.net/events/470983'
+    },
+    {
+        date: '2026.04.25',
+        day: 'SAT',
+        title: 'CAMP ROCK FRIENDS vol.6',
+        venue: '奈良 OIWAKE PARK',
+        ticket: 'https://crf.official.ec/'
     }
 ];
 
