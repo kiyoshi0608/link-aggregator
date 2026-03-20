@@ -199,6 +199,13 @@ document.querySelectorAll('.section').forEach(section => {
     canvas.addEventListener('click', jump);
     canvas.addEventListener('touchstart', e => { e.preventDefault(); jump(); }, { passive: false });
 
+    // Mobile jump button
+    const jumpBtn = document.getElementById('jump-btn');
+    if (jumpBtn) {
+        jumpBtn.addEventListener('touchstart', e => { e.preventDefault(); jump(); }, { passive: false });
+        jumpBtn.addEventListener('click', e => { e.preventDefault(); jump(); });
+    }
+
     // ── Particles ──────────────────────────────────────────
     function spawnDust() {
         for (let i = 0; i < 5; i++) {
