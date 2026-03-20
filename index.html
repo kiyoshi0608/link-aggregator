@@ -43,6 +43,7 @@
                 <li><a href="#profile" class="nav-link">PROFILE</a></li>
                 <li><a href="#saboten" class="nav-link">SABOTEN</a></li>
                 <li><a href="#studio" class="nav-link">STUDIO</a></li>
+                <li><a href="#game" class="nav-link">GAME</a></li>
             </ul>
         </div>
     </nav>
@@ -77,7 +78,7 @@
         </div>
         <div class="scroll-down">
             <span>SCROLL</span>
-            <div class="arrow"></div>
+            <div class="scroll-arrow">↓</div>
         </div>
     </section>
 
@@ -159,6 +160,31 @@
         </div>
     </section>
 
+
+    <!-- Game Section -->
+    <section id="game" class="section game-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title marker">🌵 サボテンジャンプ</h2>
+                <p class="section-subtitle hand-drawn">キヨシのサボテンを操作してジャンプ！ハイスコアを狙え！</p>
+            </div>
+            <div class="game-wrapper">
+                <div class="game-hud">
+                    <div class="game-hud-item">
+                        <span class="game-hud-label">SCORE</span>
+                        <span class="game-hud-value" id="game-score">0</span>
+                    </div>
+                    <div class="game-hud-title">SABOTEN JUMP</div>
+                    <div class="game-hud-item">
+                        <span class="game-hud-label">BEST</span>
+                        <span class="game-hud-value" id="game-hiscore">0</span>
+                    </div>
+                </div>
+                <canvas id="game-canvas"></canvas>
+            </div>
+            <p class="game-hint hand-drawn">クリック・タップ・スペースキーでジャンプ！</p>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
