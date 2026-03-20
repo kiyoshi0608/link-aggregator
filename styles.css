@@ -231,6 +231,7 @@ body {
     justify-content: center;
     align-items: center;
     max-width: 500px; /* Reduced from 600px */
+    max-height: 500px; /* New constraint */
 }
 
 .hero-photo-frame {
