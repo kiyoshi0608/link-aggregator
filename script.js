@@ -396,6 +396,14 @@ document.querySelectorAll('.section').forEach(section => {
     }
 
     function update(dt) {
+        // Always decay screen shake and update particles (even on game over / idle)
+        if (screenShake > 0) screenShake = Math.max(0, screenShake - 0.6 * dt);
+
+        dustParts.forEach(p => { p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=0.2*dt; p.life-=0.07*dt; });
+        dustParts = dustParts.filter(p => p.life > 0);
+        particles.forEach(p => { p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=0.3*dt; p.life-=0.035*dt; });
+        particles = particles.filter(p => p.life > 0);
+
         if (state !== 'running') { animTimer+=dt; if(animTimer>=15){legFrame^=1;animTimer=0;} return; }
 
         score += 0.15 * dt;
@@ -424,14 +432,6 @@ document.querySelectorAll('.section').forEach(section => {
 
         obstacles.forEach(o => o.x -= speed * dt);
         obstacles = obstacles.filter(o => o.x > -120);
-
-        dustParts.forEach(p => { p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=0.2*dt; p.life-=0.07*dt; });
-        dustParts = dustParts.filter(p => p.life > 0);
-
-        particles.forEach(p => { p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=0.3*dt; p.life-=0.035*dt; });
-        particles = particles.filter(p => p.life > 0);
-
-        if (screenShake > 0) screenShake -= 0.4 * dt;
 
         if (hitTest()) {
             state = 'dead'; screenShake = 10; spawnDeath();
