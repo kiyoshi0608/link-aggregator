@@ -143,7 +143,7 @@ document.querySelectorAll('.section').forEach(section => {
 });
 
 // ============================================================
-//  🌵 SABOTEN JUMP - Mini Game
+//  🌵 SABOTEN JUMP v2 - Mobile-First Enhanced
 // ============================================================
 (function () {
     const canvas = document.getElementById('game-canvas');
@@ -151,312 +151,317 @@ document.querySelectorAll('.section').forEach(section => {
     const ctx = canvas.getContext('2d');
 
     const W = 800;
-    const H = 220;
-    canvas.width = W;
+    const H = 290;       // taller canvas
+    canvas.width  = W;
     canvas.height = H;
 
-    const GROUND_Y = H - 45;
-    const GRAVITY = 0.75;
-    const JUMP_V = -15;
+    const GROUND_Y  = H - 55;
+    const GRAVITY   = 0.9;
+    const JUMP_V    = -18;
+    const INIT_SPD  = 7;   // faster start
 
-    // Colors
     const C = {
-        bg: '#fdfaf6',
-        ground: '#2c3e38',
-        green: '#3eb46b',
-        darkGreen: '#2a7a4a',
-        pop: '#ff6b6b',
-        yellow: '#ffd166',
-        white: '#ffffff',
-        muted: 'rgba(44,62,56,0.25)',
+        bg: '#fdfaf6', ground: '#2c3e38', green: '#3eb46b',
+        dark: '#2a7a4a', pop: '#ff6b6b', yellow: '#ffd166', white: '#fff',
+        muted: 'rgba(44,62,56,0.18)',
     };
 
-    let state = 'idle'; // idle | running | dead
+    let state = 'idle';
     let score = 0;
     let hiScore = parseInt(localStorage.getItem('sabotenJumpHi') || '0');
-    let speed, frameCount, nextIn, obstacles, groundOff, cloudOff, animTimer, legFrame;
+    let speed, frameCount, nextIn, obstacles, groundOff, cloudOff;
+    let animTimer = 0, legFrame = 0;
+    let particles = [], dustParts = [];
+    let screenShake = 0;
+    let lastTs = 0;
 
-    const player = { x: 90, y: 0, w: 40, h: 56, vy: 0, onGround: true };
+    const P = { x: 90, y: 0, w: 46, h: 62, vy: 0, onGround: true, sq: 1, st: 1 };
 
     function reset() {
-        score = 0; speed = 5; frameCount = 0; nextIn = 90;
-        obstacles = []; groundOff = 0; cloudOff = 0; animTimer = 0; legFrame = 0;
-        player.y = GROUND_Y - player.h;
-        player.vy = 0; player.onGround = true;
+        score = 0; speed = INIT_SPD; frameCount = 0; nextIn = 75;
+        obstacles = []; particles = []; dustParts = [];
+        groundOff = cloudOff = animTimer = legFrame = screenShake = 0;
+        P.y = GROUND_Y - P.h; P.vy = 0; P.onGround = true; P.sq = P.st = 1;
     }
 
     function jump() {
         if (state === 'idle' || state === 'dead') { state = 'running'; reset(); return; }
-        if (state === 'running' && player.onGround) {
-            player.vy = JUMP_V; player.onGround = false;
+        if (state === 'running' && P.onGround) {
+            P.vy = JUMP_V; P.onGround = false; P.sq = 0.6; P.st = 1.5;
+            spawnDust();
         }
     }
 
-    // Input
+    // ── Input ──────────────────────────────────────────────
     document.addEventListener('keydown', e => {
         if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); jump(); }
     });
     canvas.addEventListener('click', jump);
     canvas.addEventListener('touchstart', e => { e.preventDefault(); jump(); }, { passive: false });
 
-    // ── Drawing helpers ──────────────────────────────────────
-
-    function drawGround() {
-        ctx.fillStyle = C.ground;
-        ctx.fillRect(0, GROUND_Y, W, 3);
-        // dashes
-        for (let i = 0; i < 22; i++) {
-            const x = (i * 55 - groundOff % 55 + W) % W;
-            ctx.fillRect(x, GROUND_Y + 7, 30, 3);
+    // ── Particles ──────────────────────────────────────────
+    function spawnDust() {
+        for (let i = 0; i < 5; i++) {
+            dustParts.push({ x: P.x + Math.random() * P.w, y: GROUND_Y,
+                vx: (Math.random() - 0.5) * 2, vy: -Math.random() * 2,
+                r: Math.random() * 5 + 2, life: 1 });
         }
-        // music notes
-        ctx.fillStyle = C.muted;
-        ctx.font = '14px serif';
-        for (let i = 0; i < 12; i++) {
-            const x = (i * 80 - groundOff % 80 * 0.7 + W) % W;
-            ctx.fillText('♪', x, GROUND_Y + 22);
+    }
+    function spawnDeath() {
+        const cs = [C.green, C.yellow, C.pop, C.dark, C.white];
+        for (let i = 0; i < 22; i++) {
+            const a = Math.random() * Math.PI * 2, spd = Math.random() * 7 + 2;
+            particles.push({ x: P.x + P.w / 2, y: P.y + P.h / 2,
+                vx: Math.cos(a) * spd, vy: Math.sin(a) * spd - 3,
+                r: Math.random() * 6 + 3, color: cs[Math.floor(Math.random() * cs.length)], life: 1 });
         }
     }
 
+    // ── Draw helpers ───────────────────────────────────────
+    function drawBg() {
+        const g = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+        g.addColorStop(0, '#fdfaf6'); g.addColorStop(1, '#f0f7f4');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    }
+
     function drawClouds() {
-        ctx.fillStyle = 'rgba(62,180,107,0.12)';
-        [[80, 28, 22], [260, 45, 18], [480, 20, 28], [680, 38, 20]].forEach(([bx, by, r]) => {
-            const x = (bx - cloudOff * 0.4 % W + W) % W;
+        ctx.fillStyle = 'rgba(62,180,107,0.09)';
+        [[100,30,28],[300,50,20],[530,22,34],[720,40,22]].forEach(([bx,by,r]) => {
+            const x = ((bx - cloudOff * 0.3) % W + W) % W;
             ctx.beginPath();
-            ctx.arc(x, by, r, 0, Math.PI * 2);
-            ctx.arc(x + r * 0.8, by - r * 0.3, r * 0.75, 0, Math.PI * 2);
-            ctx.arc(x - r * 0.7, by - r * 0.15, r * 0.65, 0, Math.PI * 2);
+            ctx.arc(x, by, r, 0, Math.PI*2); ctx.arc(x+r*.8, by-r*.35, r*.72, 0, Math.PI*2);
+            ctx.arc(x-r*.65, by-r*.2, r*.62, 0, Math.PI*2); ctx.arc(x+r*1.5, by-r*.1, r*.5, 0, Math.PI*2);
             ctx.fill();
         });
     }
 
-    function drawPlayer(isDead) {
-        const { x, y, w } = player;
-        const cx = x + w / 2;
-
-        // arms
-        ctx.fillStyle = C.green;
-        ctx.fillRect(x - 7, y + 18, 14, 8);
-        ctx.fillRect(x - 7, y + 10, 8, 12);
-        ctx.fillRect(x + w - 7, y + 22, 14, 8);
-        ctx.fillRect(x + w - 1, y + 14, 8, 12);
-
-        // body
-        ctx.fillRect(x + 8, y + 14, w - 16, 38);
-
-        // head
-        ctx.beginPath();
-        ctx.arc(cx, y + 14, 13, 0, Math.PI * 2);
-        ctx.fill();
-
-        // spikes
-        ctx.fillStyle = C.darkGreen;
-        ctx.fillRect(cx - 2, y - 3, 4, 9);
-        ctx.fillRect(x + 4, y + 2, 4, 7);
-        ctx.fillRect(x + w - 8, y + 4, 4, 7);
-
-        if (isDead) {
-            // X eyes
-            ctx.strokeStyle = C.ground;
-            ctx.lineWidth = 2.5;
-            [[cx - 9, y + 7, cx - 4, y + 12], [cx - 4, y + 7, cx - 9, y + 12],
-            [cx + 3, y + 7, cx + 8, y + 12], [cx + 8, y + 7, cx + 3, y + 12]].forEach(([x1, y1, x2, y2]) => {
-                ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-            });
-            // sad mouth
-            ctx.beginPath(); ctx.arc(cx, y + 22, 5, Math.PI + 0.3, 2 * Math.PI - 0.3); ctx.stroke();
-        } else {
-            // sunglasses
-            ctx.fillStyle = C.ground;
-            ctx.fillRect(cx - 10, y + 8, 9, 5);
-            ctx.fillRect(cx + 1, y + 8, 9, 5);
-            ctx.fillRect(cx - 1, y + 9, 2, 3);
-            // eyes (peek under shades)
-            ctx.fillStyle = C.white;
-            ctx.beginPath();
-            ctx.arc(cx - 5, y + 12, 2.5, 0, Math.PI * 2);
-            ctx.arc(cx + 5, y + 12, 2.5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = C.ground;
-            ctx.beginPath();
-            ctx.arc(cx - 4.5, y + 12, 1.5, 0, Math.PI * 2);
-            ctx.arc(cx + 5.5, y + 12, 1.5, 0, Math.PI * 2);
-            ctx.fill();
-            // smile
-            ctx.strokeStyle = C.ground;
-            ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.arc(cx, y + 20, 4, 0.2, Math.PI - 0.2); ctx.stroke();
+    function drawGround() {
+        ctx.fillStyle = '#e8f2ec'; ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+        ctx.strokeStyle = C.ground; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(0, GROUND_Y); ctx.lineTo(W, GROUND_Y); ctx.stroke();
+        ctx.fillStyle = 'rgba(44,62,56,0.32)';
+        for (let i = 0; i < 22; i++) {
+            const x = ((i * 55 - groundOff % 55) + W + W) % W;
+            ctx.fillRect(x, GROUND_Y + 8, 28, 3);
         }
-
-        // legs
-        ctx.fillStyle = C.darkGreen;
-        if (player.onGround) {
-            ctx.fillRect(x + 9, y + 49, 10, legFrame === 0 ? 14 : 9);
-            ctx.fillRect(x + 21, y + 49, 10, legFrame === 0 ? 9 : 14);
-        } else {
-            ctx.fillRect(x + 9, y + 49, 10, 9);
-            ctx.fillRect(x + 21, y + 49, 10, 9);
+        ctx.fillStyle = C.muted; ctx.font = '15px serif';
+        for (let i = 0; i < 12; i++) {
+            const x = ((i * 80 - groundOff % 80 * .65) + W + W) % W;
+            ctx.fillText('♪', x, GROUND_Y + 28);
         }
     }
 
-    function drawObstacle(obs) {
-        const cx = obs.x + obs.w / 2;
+    function drawPlayer(dead) {
+        const { w, sq, st } = P;
+        const cx = P.x + w / 2;
+        ctx.save();
+        ctx.translate(cx, P.y + P.h / 2);
+        ctx.scale(sq, st);
+        ctx.translate(-w / 2, -P.h / 2);
 
-        if (obs.type === 'amp') {
-            ctx.fillStyle = C.ground;
-            ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
-            ctx.strokeStyle = C.green;
-            ctx.lineWidth = 2;
-            ctx.strokeRect(obs.x + 4, obs.y + 4, obs.w - 8, obs.h - 8);
-            ctx.fillStyle = C.green;
-            ctx.beginPath(); ctx.arc(cx, obs.y + obs.h * 0.45, obs.h * 0.22, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = C.yellow;
-            ctx.fillRect(obs.x + 6, obs.y + obs.h - 14, obs.w - 12, 6);
-        } else if (obs.type === 'guitar') {
-            ctx.fillStyle = C.pop;
-            // neck
-            ctx.fillRect(cx - 5, obs.y, 10, obs.h);
-            // body
-            ctx.beginPath(); ctx.arc(cx, obs.y + obs.h - 18, 15, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#cc4444';
-            ctx.fillRect(obs.x + 2, obs.y, obs.w - 4, 6);
-            // strings
-            ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-            ctx.lineWidth = 1;
-            for (let i = -2; i <= 2; i++) {
-                ctx.beginPath();
-                ctx.moveTo(cx + i * 2, obs.y + 6);
-                ctx.lineTo(cx + i * 2, obs.y + obs.h - 18);
-                ctx.stroke();
-            }
+        ctx.fillStyle = C.green;
+        ctx.fillRect(-8, 18, 15, 9); ctx.fillRect(-8, 10, 9, 13);
+        ctx.fillRect(w-7, 22, 15, 9); ctx.fillRect(w-1, 14, 9, 13);
+        ctx.fillRect(9, 16, w-18, 38);
+        ctx.beginPath(); ctx.arc(w/2, 15, 15, 0, Math.PI*2); ctx.fill();
+
+        ctx.fillStyle = C.dark;
+        ctx.fillRect(w/2-2, -4, 4, 10); ctx.fillRect(4, 2, 4, 8); ctx.fillRect(w-8, 4, 4, 8);
+
+        if (dead) {
+            ctx.strokeStyle = C.ground; ctx.lineWidth = 3;
+            [[-11,7,-4,14],[-4,7,-11,14],[3,7,10,14],[10,7,3,14]].forEach(([x1,y1,x2,y2]) => {
+                ctx.beginPath(); ctx.moveTo(w/2+x1,y1); ctx.lineTo(w/2+x2,y2); ctx.stroke();
+            });
+            ctx.beginPath(); ctx.arc(w/2, 25, 5, Math.PI+.4, Math.PI*2-.4); ctx.stroke();
         } else {
-            // cactus
-            ctx.fillStyle = C.green;
-            ctx.fillRect(obs.x + 7, obs.y + 8, obs.w - 14, obs.h - 8);
-            ctx.beginPath(); ctx.arc(cx, obs.y + 8, (obs.w - 14) / 2, 0, Math.PI * 2); ctx.fill();
-            if (obs.h > 50) {
-                ctx.fillRect(obs.x - 2, obs.y + 18, 12, 8);
-                ctx.fillRect(obs.x - 2, obs.y + 10, 8, 12);
-                ctx.fillRect(obs.x + obs.w - 10, obs.y + 22, 12, 8);
-                ctx.fillRect(obs.x + obs.w - 6, obs.y + 14, 8, 12);
-            }
-            ctx.fillStyle = C.darkGreen;
-            ctx.fillRect(cx - 2, obs.y - 4, 4, 8);
+            ctx.fillStyle = 'rgba(25,35,45,0.92)';
+            ctx.fillRect(w/2-12, 8, 11, 7); ctx.fillRect(w/2+1, 8, 11, 7); ctx.fillRect(w/2-1, 9, 2, 5);
+            ctx.strokeStyle = C.ground; ctx.lineWidth = 1;
+            ctx.strokeRect(w/2-12, 8, 11, 7); ctx.strokeRect(w/2+1, 8, 11, 7);
+            ctx.strokeStyle = C.ground; ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.arc(w/2, 24, 5, .2, Math.PI-.2); ctx.stroke();
         }
 
-        ctx.strokeStyle = C.ground;
-        ctx.lineWidth = 2;
-        ctx.strokeRect(obs.x, obs.y, obs.w, obs.h);
+        ctx.fillStyle = C.dark;
+        if (P.onGround) {
+            ctx.fillRect(10, 51, 12, legFrame===0?18:10); ctx.fillRect(24, 51, 12, legFrame===0?10:18);
+        } else {
+            ctx.fillRect(10, 51, 12, 10); ctx.fillRect(24, 51, 12, 10);
+        }
+        ctx.restore();
+    }
+
+    function drawObstacle(o) {
+        const cx = o.x + o.w / 2;
+        if (o.type === 'amp') {
+            const g = ctx.createLinearGradient(o.x,o.y,o.x+o.w,o.y+o.h);
+            g.addColorStop(0,'#3a5048'); g.addColorStop(1,'#2c3e38');
+            ctx.fillStyle = g; ctx.fillRect(o.x, o.y, o.w, o.h);
+            ctx.strokeStyle = C.green; ctx.lineWidth = 2;
+            ctx.strokeRect(o.x+4, o.y+4, o.w-8, o.h-8);
+            ctx.fillStyle = C.dark;
+            ctx.beginPath(); ctx.arc(cx, o.y+o.h*.42, o.h*.25, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = C.green;
+            ctx.beginPath(); ctx.arc(cx, o.y+o.h*.42, o.h*.14, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = C.yellow; ctx.fillRect(o.x+7, o.y+o.h-17, o.w-14, 8);
+        } else if (o.type === 'guitar') {
+            ctx.fillStyle = C.pop;
+            ctx.fillRect(cx-5, o.y, 10, o.h);
+            ctx.beginPath(); ctx.arc(cx, o.y+o.h-20, 18, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#bb3333'; ctx.fillRect(o.x+2, o.y, o.w-4, 7);
+            ctx.strokeStyle = 'rgba(255,255,255,.4)'; ctx.lineWidth = 1;
+            for (let i=-2; i<=2; i++) { ctx.beginPath(); ctx.moveTo(cx+i*2.2,o.y+7); ctx.lineTo(cx+i*2.2,o.y+o.h-20); ctx.stroke(); }
+        } else {
+            ctx.fillStyle = C.green;
+            ctx.fillRect(o.x+9, o.y+10, o.w-18, o.h-10);
+            ctx.beginPath(); ctx.arc(cx, o.y+10, (o.w-18)/2, 0, Math.PI*2); ctx.fill();
+            if (o.h > 56) {
+                ctx.fillRect(o.x-4,o.y+20,14,10); ctx.fillRect(o.x-4,o.y+11,9,14);
+                ctx.fillRect(o.x+o.w-10,o.y+24,14,10); ctx.fillRect(o.x+o.w-5,o.y+15,9,14);
+            }
+            ctx.fillStyle = C.dark; ctx.fillRect(cx-2, o.y-5, 4, 10);
+            if (o.h > 56) { ctx.fillRect(o.x+8,o.y+4,4,8); ctx.fillRect(o.x+o.w-12,o.y+6,4,8); }
+        }
+        ctx.strokeStyle = C.ground; ctx.lineWidth = 2;
+        ctx.strokeRect(o.x, o.y, o.w, o.h);
+    }
+
+    function drawSpeedBar() {
+        const level = Math.min(Math.floor(score / 200) + 1, 10);
+        const filled = (level - 1) / 9;
+        const bw = 140, bx = W - bw - 14, by = 14;
+        ctx.fillStyle = 'rgba(44,62,56,0.12)'; ctx.fillRect(bx, by, bw, 10);
+        const g = ctx.createLinearGradient(bx, 0, bx+bw, 0);
+        g.addColorStop(0, '#3eb46b'); g.addColorStop(.7, '#ffd166'); g.addColorStop(1, '#ff6b6b');
+        ctx.fillStyle = g; ctx.fillRect(bx, by, bw * filled, 10);
+        ctx.strokeStyle = C.ground; ctx.lineWidth = 1.5; ctx.strokeRect(bx, by, bw, 10);
+        ctx.fillStyle = C.ground; ctx.font = '10px "Yusei Magic", sans-serif';
+        ctx.textAlign = 'right'; ctx.fillText(`SPEED Lv${level}`, W-14, by-1); ctx.textAlign = 'left';
     }
 
     function drawIdleScreen() {
-        ctx.fillStyle = 'rgba(253,250,246,0.88)';
-        ctx.fillRect(0, 0, W, H);
-        ctx.fillStyle = C.ground;
-        ctx.font = 'bold 30px "RocknRoll One", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('🌵 サボテンジャンプ', W / 2, H / 2 - 18);
-        ctx.font = '16px "Yusei Magic", sans-serif';
-        ctx.fillStyle = C.darkGreen;
-        ctx.fillText('クリック / タップ / スペースでスタート！', W / 2, H / 2 + 14);
+        ctx.fillStyle = 'rgba(253,250,246,.9)'; ctx.fillRect(0,0,W,H);
+        drawPlayer(false);
+        ctx.fillStyle = C.ground; ctx.font = 'bold 32px "RocknRoll One",sans-serif';
+        ctx.textAlign = 'center'; ctx.fillText('🌵 サボテンジャンプ', W/2, H/2-28);
+        ctx.fillStyle = C.dark; ctx.font = '18px "Yusei Magic",sans-serif';
+        ctx.fillText('クリック／タップ／スペースでスタート！', W/2, H/2+10);
+        if (hiScore > 0) {
+            ctx.fillStyle = C.pop; ctx.font = 'bold 15px "RocknRoll One",sans-serif';
+            ctx.fillText(`🏆 BEST: ${hiScore}`, W/2, H/2+42);
+        }
         ctx.textAlign = 'left';
     }
 
     function drawDeadScreen() {
-        ctx.fillStyle = 'rgba(253,250,246,0.87)';
-        const bx = W / 2 - 170, by = H / 2 - 55;
-        ctx.fillRect(bx, by, 340, 115);
-        ctx.strokeStyle = C.ground; ctx.lineWidth = 3;
-        ctx.strokeRect(bx, by, 340, 115);
-
-        ctx.fillStyle = C.pop;
-        ctx.font = 'bold 28px "RocknRoll One", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('GAME OVER!', W / 2, H / 2 - 18);
-
-        ctx.fillStyle = C.ground;
-        ctx.font = '16px "Yusei Magic", sans-serif';
-        ctx.fillText(`スコア: ${Math.floor(score)}   ベスト: ${hiScore}`, W / 2, H / 2 + 12);
-        ctx.fillText('もう一度？ クリック / タップ！', W / 2, H / 2 + 40);
-        ctx.textAlign = 'left';
+        ctx.fillStyle = 'rgba(253,250,246,.88)';
+        const bx=W/2-190, by=H/2-65; ctx.fillRect(bx,by,380,132);
+        ctx.strokeStyle=C.ground; ctx.lineWidth=3; ctx.strokeRect(bx,by,380,132);
+        ctx.fillStyle=C.pop; ctx.font='bold 30px "RocknRoll One",sans-serif';
+        ctx.textAlign='center'; ctx.fillText('💥 GAME OVER!', W/2, H/2-22);
+        const s=Math.floor(score), isNew=(s>=hiScore&&s>0);
+        ctx.fillStyle=isNew?C.pop:C.ground;
+        ctx.font=isNew?'bold 19px "RocknRoll One",sans-serif':'17px "Yusei Magic",sans-serif';
+        ctx.fillText(isNew?`🎉 NEW RECORD: ${s}!`:`スコア: ${s}　ベスト: ${hiScore}`, W/2, H/2+12);
+        ctx.fillStyle=C.dark; ctx.font='15px "Yusei Magic",sans-serif';
+        ctx.fillText('クリック／タップ／スペースでリトライ！', W/2, H/2+45);
+        ctx.textAlign='left';
     }
 
-    // ── Game logic ───────────────────────────────────────────
-
-    function spawnObstacle() {
-        const type = ['cactus', 'cactus', 'amp', 'guitar'][Math.floor(Math.random() * 4)];
-        const h = type === 'cactus' ? (Math.random() < 0.5 ? 50 : 70) : (type === 'amp' ? 55 : 72);
-        const w = type === 'cactus' ? 34 : (type === 'amp' ? 52 : 32);
-        obstacles.push({ x: W + 20, y: GROUND_Y - h, w, h, type });
+    // ── Game logic ─────────────────────────────────────────
+    function spawn() {
+        const r = Math.random();
+        let type, h, w;
+        if (r < .5)      { type='cactus'; h=Math.random()<.45?56:78; w=40; }
+        else if (r < .75){ type='amp';    h=62; w=58; }
+        else             { type='guitar'; h=78; w=38; }
+        obstacles.push({ x: W+20, y: GROUND_Y-h, w, h, type });
     }
 
-    function checkHit() {
+    function hitTest() {
         const m = 10;
         for (const o of obstacles) {
-            if (player.x + m < o.x + o.w - m && player.x + player.w - m > o.x + m &&
-                player.y + m < o.y + o.h - m && player.y + player.h - m > o.y + m) return true;
+            if (P.x+m < o.x+o.w-m && P.x+P.w-m > o.x+m &&
+                P.y+m < o.y+o.h-m && P.y+P.h-m > o.y+m) return true;
         }
         return false;
     }
 
-    function update() {
-        if (state !== 'running') return;
+    function update(dt) {
+        if (state !== 'running') { animTimer+=dt; if(animTimer>=15){legFrame^=1;animTimer=0;} return; }
 
-        speed = 5 + Math.floor(score / 250) * 0.4;
-        score += 0.12;
+        score += 0.15 * dt;
+        speed = INIT_SPD + Math.floor(score / 180) * 0.5;
+        const animRate = Math.max(3, 9 - speed / 2);
+        animTimer += dt; if (animTimer >= animRate) { legFrame^=1; animTimer=0; }
 
-        // legs animation
-        animTimer++;
-        if (animTimer >= 7) { legFrame ^= 1; animTimer = 0; }
+        P.sq += (1-P.sq)*0.25*dt; P.st += (1-P.st)*0.25*dt;
 
-        // gravity
-        player.vy += GRAVITY;
-        player.y += player.vy;
-        if (player.y >= GROUND_Y - player.h) {
-            player.y = GROUND_Y - player.h; player.vy = 0; player.onGround = true;
+        P.vy += GRAVITY * dt;
+        P.y  += P.vy    * dt;
+        if (P.y >= GROUND_Y - P.h) {
+            const wasJumping = !P.onGround;
+            P.y = GROUND_Y - P.h; P.vy = 0; P.onGround = true;
+            if (wasJumping) { P.sq = 0.72; P.st = 1.28; spawnDust(); }
         }
 
-        groundOff += speed;
-        cloudOff += 0.5;
+        groundOff += speed * dt; cloudOff += 0.4 * dt;
 
-        frameCount++;
+        frameCount += dt;
         if (frameCount >= nextIn) {
-            spawnObstacle();
-            nextIn = Math.floor(Math.random() * 45) + 70 - Math.min(Math.floor(score / 400) * 6, 30);
+            spawn();
+            nextIn = Math.floor(Math.random()*38)+62 - Math.min(Math.floor(score/250)*7, 28);
             frameCount = 0;
         }
 
-        obstacles.forEach(o => o.x -= speed);
-        obstacles = obstacles.filter(o => o.x > -100);
+        obstacles.forEach(o => o.x -= speed * dt);
+        obstacles = obstacles.filter(o => o.x > -120);
 
-        if (checkHit()) {
-            state = 'dead';
+        dustParts.forEach(p => { p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=0.2*dt; p.life-=0.07*dt; });
+        dustParts = dustParts.filter(p => p.life > 0);
+
+        particles.forEach(p => { p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=0.3*dt; p.life-=0.035*dt; });
+        particles = particles.filter(p => p.life > 0);
+
+        if (screenShake > 0) screenShake -= 0.4 * dt;
+
+        if (hitTest()) {
+            state = 'dead'; screenShake = 10; spawnDeath();
             const s = Math.floor(score);
             if (s > hiScore) { hiScore = s; localStorage.setItem('sabotenJumpHi', hiScore); }
         }
     }
 
     function draw() {
-        ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = C.bg;
-        ctx.fillRect(0, 0, W, H);
-
-        drawClouds();
-        drawGround();
-        obstacles.forEach(o => drawObstacle(o));
+        ctx.save();
+        if (screenShake > 0) ctx.translate((Math.random()-.5)*screenShake*2, (Math.random()-.5)*screenShake*2);
+        drawBg(); drawClouds(); drawGround();
+        dustParts.forEach(p => { ctx.globalAlpha=p.life; ctx.fillStyle=C.dark; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); });
+        ctx.globalAlpha = 1;
+        if (state !== 'idle') obstacles.forEach(o => drawObstacle(o));
         drawPlayer(state === 'dead');
+        particles.forEach(p => { ctx.globalAlpha=p.life; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); });
+        ctx.globalAlpha = 1;
+        if (state === 'running') drawSpeedBar();
+        ctx.restore();
 
-        // Update HUD
         document.getElementById('game-score').textContent = Math.floor(score);
         document.getElementById('game-hiscore').textContent = hiScore;
-
         if (state === 'idle') drawIdleScreen();
         if (state === 'dead') drawDeadScreen();
     }
 
-    function loop() { update(); draw(); requestAnimationFrame(loop); }
+    function loop(ts) {
+        const dt = Math.min((ts - lastTs) / 16.67, 3); // delta time (1.0 = 60fps)
+        lastTs = ts;
+        update(dt); draw();
+        requestAnimationFrame(loop);
+    }
 
     document.getElementById('game-hiscore').textContent = hiScore;
     reset();
-    loop();
+    requestAnimationFrame(loop);
 })();
+
+
