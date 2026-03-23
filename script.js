@@ -150,8 +150,8 @@ document.querySelectorAll('.section').forEach(section => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    const W = 800;
-    const H = 290;       // taller canvas
+    const W = 1000;
+    const H = 310;       // taller canvas
     canvas.width  = W;
     canvas.height = H;
 
@@ -165,6 +165,7 @@ document.querySelectorAll('.section').forEach(section => {
         dark: '#2a7a4a', pop: '#ff6b6b', yellow: '#ffd166', white: '#fff',
         muted: 'rgba(44,62,56,0.18)',
     };
+    const EMOJI_ENEMIES = ['💩', '🚽', '🐍', '🪴', '🎸', '🐦‍⬛'];
 
     let state = 'idle';
     let score = 0;
@@ -226,14 +227,19 @@ document.querySelectorAll('.section').forEach(section => {
 
     // ── Draw helpers ───────────────────────────────────────
     function drawBg() {
+        let topC = '#fdfaf6', botC = '#f0f7f4'; // 昼
+        if (score > 1200) { topC = '#0a0a20'; botC = '#1c1c3c'; } // 深夜
+        else if (score > 800) { topC = '#1b2755'; botC = '#80344d'; } // 夜
+        else if (score > 400) { topC = '#ff7b54'; botC = '#ffd56b'; } // 夕方
+
         const g = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
-        g.addColorStop(0, '#fdfaf6'); g.addColorStop(1, '#f0f7f4');
+        g.addColorStop(0, topC); g.addColorStop(1, botC);
         ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     }
 
     function drawClouds() {
-        ctx.fillStyle = 'rgba(62,180,107,0.09)';
-        [[100,30,28],[300,50,20],[530,22,34],[720,40,22]].forEach(([bx,by,r]) => {
+        ctx.fillStyle = (score > 800) ? 'rgba(255,255,255,0.06)' : 'rgba(62,180,107,0.09)';
+        [[100,30,28],[300,50,20],[530,22,34],[720,40,22],[920,25,30]].forEach(([bx,by,r]) => {
             const x = ((bx - cloudOff * 0.3) % W + W) % W;
             ctx.beginPath();
             ctx.arc(x, by, r, 0, Math.PI*2); ctx.arc(x+r*.8, by-r*.35, r*.72, 0, Math.PI*2);
@@ -319,6 +325,15 @@ document.querySelectorAll('.section').forEach(section => {
             ctx.fillStyle = '#bb3333'; ctx.fillRect(o.x+2, o.y, o.w-4, 7);
             ctx.strokeStyle = 'rgba(255,255,255,.4)'; ctx.lineWidth = 1;
             for (let i=-2; i<=2; i++) { ctx.beginPath(); ctx.moveTo(cx+i*2.2,o.y+7); ctx.lineTo(cx+i*2.2,o.y+o.h-20); ctx.stroke(); }
+        } else if (o.type === 'emoji') {
+            // No border
+            ctx.font = o.h + 'px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText(o.emoji, cx, o.y);
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'alphabetic';
+            return; // Skip standard border
         } else {
             ctx.fillStyle = C.green;
             ctx.fillRect(o.x+9, o.y+10, o.w-18, o.h-10);
@@ -379,11 +394,12 @@ document.querySelectorAll('.section').forEach(section => {
     // ── Game logic ─────────────────────────────────────────
     function spawn() {
         const r = Math.random();
-        let type, h, w;
-        if (r < .5)      { type='cactus'; h=Math.random()<.45?56:78; w=40; }
-        else if (r < .75){ type='amp';    h=62; w=58; }
-        else             { type='guitar'; h=78; w=38; }
-        obstacles.push({ x: W+20, y: GROUND_Y-h, w, h, type });
+        let type, h, w, emoji = null;
+        if (r < .35)      { type='cactus'; h=Math.random()<.45?56:78; w=40; }
+        else if (r < .55) { type='amp';    h=62; w=58; }
+        else if (r < .70) { type='guitar'; h=78; w=38; }
+        else              { type='emoji';  h=45; w=45; emoji = EMOJI_ENEMIES[Math.floor(Math.random()*EMOJI_ENEMIES.length)]; }
+        obstacles.push({ x: W+20, y: GROUND_Y-h, w, h, type, emoji });
     }
 
     function hitTest() {
@@ -407,7 +423,7 @@ document.querySelectorAll('.section').forEach(section => {
         if (state !== 'running') { animTimer+=dt; if(animTimer>=15){legFrame^=1;animTimer=0;} return; }
 
         score += 0.15 * dt;
-        speed = INIT_SPD + Math.floor(score / 180) * 0.5;
+        speed = INIT_SPD + (score / 120) * 1.5; // Difficulty ramps up faster
         const animRate = Math.max(3, 9 - speed / 2);
         animTimer += dt; if (animTimer >= animRate) { legFrame^=1; animTimer=0; }
 

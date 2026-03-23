@@ -1,0 +1,95 @@
+/* キヨシ Official Site - Animations */
+
+/* Floating text animation for hero */
+@keyframes floatText {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Scroll down indicator animation */
+@keyframes scrollBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+/* Hero title wobble on load */
+@keyframes wobbleIn {
+    0%   { transform: rotate(-4deg) scale(0.92); opacity: 0; }
+    40%  { transform: rotate(2deg) scale(1.03); opacity: 1; }
+    70%  { transform: rotate(-1deg) scale(0.98); }
+    100% { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+
+/* Stamp effect for subtitle */
+@keyframes stampIn {
+    0%   { transform: rotate(-2deg) scale(1.4); opacity: 0; }
+    60%  { transform: rotate(-2deg) scale(0.95); opacity: 1; }
+    100% { transform: rotate(-2deg) scale(1); opacity: 1; }
+}
+
+/* Float for decorative elements */
+@keyframes floatDeco {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33%  { transform: translateY(-8px) rotate(2deg); }
+    66%  { transform: translateY(-4px) rotate(-1deg); }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+    from { transform: translateX(-40px); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+    from { transform: translateX(40px); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Pulse glow for live badges */
+@keyframes pulseBadge {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
+    50%       { box-shadow: 0 0 0 8px rgba(255, 107, 107, 0); }
+}
+
+/* Decoration deco-img float */
+.deco-img {
+    animation: floatDeco 5s ease-in-out infinite;
+    pointer-events: none;
+    user-select: none;
+}
+
+.deco-img:nth-child(2) { animation-delay: -1.5s; }
+.deco-img:nth-child(3) { animation-delay: -3s; }
+
+/* Hero title entrance */
+.hero-title {
+    animation: wobbleIn 0.7s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+/* Hero subtitle entrance */
+.hero-subtitle {
+    animation: stampIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0.3s both;
+}
+
+/* Social icons stagger entrance */
+.hero-social-icons .social-icon-link {
+    animation: slideInLeft 0.4s ease both;
+}
+.hero-social-icons .social-icon-link:nth-child(1) { animation-delay: 0.5s; }
+.hero-social-icons .social-icon-link:nth-child(2) { animation-delay: 0.65s; }
+.hero-social-icons .social-icon-link:nth-child(3) { animation-delay: 0.8s; }
+.hero-social-icons .social-icon-link:nth-child(4) { animation-delay: 0.95s; }
+
+/* Live badge pulse */
+.live-badge {
+    animation: pulseBadge 2s ease-in-out infinite;
+}

@@ -219,6 +219,21 @@ body {
     z-index: -1;
 }
 
+/* ==== ロゴ画像スタイル ==== */
+.hero-logo-container {
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-logo-img {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(5px 5px 0 var(--color-yellow));
+    animation: wobbleIn 0.8s ease-out forwards;
+}
+
 .hero-subtitle {
     font-family: var(--font-accent);
     font-size: clamp(1.5rem, 3vw, 2.5rem);
@@ -252,8 +267,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 500px; /* Reduced from 600px */
-    max-height: 500px; /* New constraint */
+    max-width: 500px;
+    max-height: 500px;
+    margin-left: -5%; /* ロゴ側に寄せる */
+    margin-bottom: 2%; /* 下へのはみ出しを少し軽減 */
 }
 
 .hero-photo-frame {
@@ -262,6 +279,12 @@ body {
     transform: rotate(-2deg);
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+}
+
+.hero-photo-frame.no-deco-frame {
+    filter: none;
+    transform: rotate(2deg);
+    animation: floatDeco 6s ease-in-out infinite;
 }
 
 .hero-photo {
@@ -277,6 +300,11 @@ body {
         75% 96%, 55% 98%, 35% 95%, 15% 97%, 2% 96%,
         4% 75%, 1% 45%, 3% 15%
     );
+}
+
+.hero-photo.no-background {
+    clip-path: none;
+    filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.15));
 }
 
 .hero-photo-wrap:hover .hero-photo-frame {
@@ -642,7 +670,7 @@ body {
 /* Game Section          */
 /* ===================== */
 .game-wrapper {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     border: 3px solid var(--color-text-dark);
     border-radius: 16px;
@@ -798,4 +826,125 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================ */
+/* Deco Illustrations  (全セクション共通)        */
+/* ============================================ */
+
+/* セクションにはposition:relativeが必要 */
+.deco-section {
+    position: relative;
+    overflow: hidden;
+}
+
+/* 全デコ共通 */
+.deco-fixed {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    animation: floatDeco 6s ease-in-out infinite;
+}
+
+/* ── HERO ── */
+.deco-h1 {
+    width: 160px;
+    bottom: -5%;
+    left: -5%;
+    transform: rotate(-12deg);
+    opacity: 0.85;
+    animation-delay: 0s;
+}
+.deco-h2 {
+    width: 120px;
+    top: 5%;
+    right: 2%;
+    transform: rotate(10deg);
+    opacity: 0.8;
+    animation-delay: -2s;
+}
+.deco-h3 {
+    width: 90px;
+    bottom: 15%;
+    right: 5%;
+    transform: rotate(-8deg);
+    opacity: 0.8;
+    animation-delay: -4s;
+}
+
+/* ── NEWS ── */
+.deco-n1 {
+    width: 120px;
+    top: 50%;
+    right: 0%;
+    transform: translateY(-50%) rotate(8deg);
+    opacity: 0.8;
+    animation-delay: -1s;
+}
+
+/* ── LIVE ── */
+.deco-l1 {
+    width: 160px;
+    top: 0%;
+    left: -2%;
+    transform: rotate(-10deg);
+    opacity: 0.85;
+    animation-delay: -3s;
+}
+.deco-l2 {
+    width: 130px;
+    bottom: -2%;
+    right: 4%;
+    transform: rotate(15deg);
+    opacity: 0.8;
+    animation-delay: -1.5s;
+}
+
+/* ── PROFILE ── */
+.deco-p1 {
+    width: 160px;
+    top: 2%;
+    right: 3%;
+    transform: rotate(12deg);
+    opacity: 0.85;
+    animation-delay: -2.5s;
+}
+
+/* ── SABOTEN/STUDIO ── */
+.deco-s1 {
+    width: 140px;
+    bottom: -5%;
+    left: -3%;
+    transform: rotate(-8deg);
+    opacity: 0.85;
+    animation-delay: -0.5s;
+}
+
+/* ── GAME ── */
+.deco-g1 {
+    width: 130px;
+    top: 0%;
+    right: 2%;
+    transform: rotate(10deg);
+    opacity: 0.8;
+    animation-delay: -3.5s;
+}
+
+/* モバイル: 小さくして表示は維持 */
+@media (max-width: 768px) {
+    .deco-h1  { width: 110px; }
+    .deco-h2  { width: 90px; }
+    .deco-h3  { width: 70px; }
+    .deco-n1  { width: 90px; }
+    .deco-l1  { width: 100px; left: 0%; }
+    .deco-l2  { width: 90px; right: 2%; }
+    .deco-p1  { width: 110px; right: 2%; }
+    .deco-s1  { width: 100px; left: 0%; }
+    .deco-g1  { width: 90px; right: 2%; }
+}
+
+/* 極小スクリーンでは非表示 */
+@media (max-width: 420px) {
+    .deco-fixed { display: none; }
 }
