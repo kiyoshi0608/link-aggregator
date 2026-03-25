@@ -185,19 +185,23 @@ body {
 
 .hero-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: 900px; /* コンパクトに */
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; /* 中央寄せに */
     position: relative;
     z-index: 2;
-    gap: 4rem;
+    gap: 1rem; /* イラストとの距離を最短に */
 }
 
 .hero-text {
-    flex: 1.2;
+    flex: 0 0 auto;
     position: relative;
     z-index: 10;
+    text-align: center; /* 中央に固定 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 子要素（ロゴとSubtitle）を真ん中に揃える */
 }
 
 .hero-title {
@@ -221,28 +225,28 @@ body {
 
 /* ==== ロゴ画像スタイル ==== */
 .hero-logo-container {
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem; /* 下のsubtitleと近づける */
     position: relative;
     z-index: 2;
 }
 
 .hero-logo-img {
-    max-width: 500px;
-    width: 100%;
+    width: 480px; 
     height: auto;
     filter: drop-shadow(5px 5px 0 var(--color-yellow));
     animation: wobbleIn 0.8s ease-out forwards;
+    margin-bottom: -1.2rem; /* さらに削ってsubtitleを極限まで近づける */
 }
 
 .hero-subtitle {
     font-family: var(--font-accent);
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: 1.6rem;
     color: #fff;
     background: var(--color-text-dark);
     display: inline-block;
-    padding: 0.5rem 2rem;
+    padding: 0.6rem 2rem;
     transform: rotate(-2deg);
-    margin-top: 1.5rem;
+    margin: 0.2rem 0 2rem; /* 余計なマージンを排除 */
     box-shadow: 6px 6px 0 var(--color-yellow);
     border-radius: 4px;
     letter-spacing: 0.1em;
@@ -250,9 +254,10 @@ body {
 
 .hero-social-icons {
     display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 1.2rem;
+    margin-top: 1.5rem; /* subtitleに少し近づける */
     flex-wrap: wrap;
+    justify-content: center; /* 完全にセンターに配置 */
 }
 
 .hero-social-icons .social-icon-link {
@@ -303,7 +308,8 @@ body {
 }
 
 .hero-photo.no-background {
-    clip-path: none;
+    width: 420px; /* イラストもロゴに合わせて巨大化 */
+    height: auto;
     filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.15));
 }
 
@@ -369,10 +375,19 @@ body {
 }
 
 /* News & Live */
-.news-grid, .live-grid {
+.news-grid {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    max-width: 850px;
+    margin: 0 auto;
+}
+.live-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 950px;
+    margin: 0 auto;
 }
 
 .news-card, .live-card {
@@ -667,6 +682,79 @@ body {
 .social-icon-link:nth-child(4):hover { background: #00b5ad; color: #fff; box-shadow: 6px 6px 0 #008f8a; }
 
 /* ===================== */
+/* Store Section         */
+/* ===================== */
+.store-section {
+    padding: 3rem 1rem;
+}
+.store-banner {
+    position: relative;
+    background: #e8f5e9; /* Light, soft green */
+    border: 3px solid var(--color-text-dark);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 8px 8px 0 var(--color-yellow);
+    max-width: 850px;
+    margin: 0 auto;
+    overflow: hidden;
+    transform: rotate(1deg);
+    transition: transform 0.3s;
+}
+.store-banner:hover {
+    transform: rotate(0deg) scale(1.02);
+    background: #f1f8e9;
+}
+.store-banner-inner {
+    position: relative;
+    z-index: 2;
+}
+.store-badge {
+    display: inline-block;
+    background: #81c784; /* Soft green badge */
+    color: #fff;
+    font-family: var(--font-accent);
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    transform: rotate(-3deg);
+    border: 2px solid var(--color-text-dark);
+}
+.store-title {
+    font-family: var(--font-head);
+    font-size: 3rem;
+    color: var(--color-text-dark);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    text-shadow: 3px 3px 0 #fff;
+}
+.store-desc {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+.store-btn {
+    display: inline-block;
+    background: var(--color-yellow);
+    color: var(--color-text-dark);
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    padding: 1rem 3rem;
+    border: 3px solid var(--color-text-dark);
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 4px 4px 0 var(--color-text-dark);
+    transition: all 0.2s;
+}
+.store-btn:hover {
+    background: #fff;
+    transform: translate(-3px, -3px) rotate(-1deg);
+    box-shadow: 7px 7px 0 var(--color-text-dark);
+}
+
+/* ===================== */
 /* Game Section          */
 /* ===================== */
 .game-wrapper {
@@ -773,19 +861,36 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     /* Hero */
+    .hero { min-height: auto; padding-top: 5rem; padding-bottom: 2rem; }
     .hero-inner {
         flex-direction: column;
         text-align: center;
-        margin-top: 5rem;
-        gap: 2rem;
+        margin-top: 0;
+        gap: 0;
     }
-    .hero-photo-wrap {
-        width: 85%;
+    .hero-text { 
+        margin-bottom: 1rem; 
+        align-items: center; 
+        width: 100%; /* 幅を画面いっぱいに */
+        max-width: none;
+    }
+    .hero-logo-img { width: 80%; max-width: 320px; margin: 0 auto; }
+    .hero-subtitle { 
+        margin: 0.5rem auto 1.5rem; 
+        font-size: 1.2rem; 
+        padding: 0.4rem 1.2rem;
+        transform: rotate(-2deg);
+    }
+    .hero-social-icons {
+        justify-content: center;
+        width: 100%;
         margin: 0 auto;
     }
-    .hero-title { font-size: 5rem; margin-left: 0; }
-    .hero-title::after { left: 4px; top: 4px; }
-    .hero-social-icons { justify-content: center; }
+
+    /* Store specific mobile resets */
+    .store-banner { padding: 2rem 1rem; }
+    .store-title { font-size: 2rem; }
+    .store-btn { padding: 1rem 1.5rem; font-size: 1rem; }
 
     /* Live */
     .live-card { grid-template-columns: 1fr; text-align: center; gap: 1rem; }
@@ -794,7 +899,7 @@ body {
     .profile-content { grid-template-columns: 1fr; }
 
     /* Sections */
-    .section { padding: 3rem 1rem; }
+    .section { padding: 4rem 1rem 3rem; scroll-margin-top: 60px; }
 
     /* Prevent any section overflow */
     .section, .container, .graffiti-box, .hero {
@@ -843,105 +948,46 @@ body {
     position: absolute;
     pointer-events: none;
     user-select: none;
-    z-index: 0;
+    z-index: 1; /* 前面に出して隠れないようにする。ただしコンテンツとは被らせない配置にする */
     animation: floatDeco 6s ease-in-out infinite;
 }
 
 /* ── HERO ── */
-.deco-h1 {
-    width: 160px;
-    bottom: -5%;
-    left: -5%;
-    transform: rotate(-12deg);
-    opacity: 0.85;
-    animation-delay: 0s;
-}
-.deco-h2 {
-    width: 120px;
-    top: 5%;
-    right: 2%;
-    transform: rotate(10deg);
-    opacity: 0.8;
-    animation-delay: -2s;
-}
-.deco-h3 {
-    width: 90px;
-    bottom: 15%;
-    right: 5%;
-    transform: rotate(-8deg);
-    opacity: 0.8;
-    animation-delay: -4s;
-}
+.deco-h1 { width: 140px; bottom: 5%; left: 1%; transform: rotate(-12deg); }
+.deco-h2 { width: 110px; top: 18%; right: 2%; transform: rotate(10deg); } /* コンテンツを避けた端 */
+.deco-h3 { width: 80px; bottom: 12%; right: 12%; transform: rotate(-8deg); }
 
 /* ── NEWS ── */
-.deco-n1 {
-    width: 120px;
-    top: 50%;
-    right: 0%;
-    transform: translateY(-50%) rotate(8deg);
-    opacity: 0.8;
-    animation-delay: -1s;
-}
+.deco-n1 { width: 100px; top: 15%; right: 2%; transform: rotate(8deg); } /* タイトルから離す */
 
 /* ── LIVE ── */
-.deco-l1 {
-    width: 160px;
-    top: 0%;
-    left: -2%;
-    transform: rotate(-10deg);
-    opacity: 0.85;
-    animation-delay: -3s;
-}
+.deco-l1 { width: 120px; top: 5%; left: 2%; transform: rotate(-10deg); }
 .deco-l2 {
-    width: 130px;
-    bottom: -2%;
-    right: 4%;
-    transform: rotate(15deg);
-    opacity: 0.8;
-    animation-delay: -1.5s;
+    width: 140px;
+    bottom: -15%; /* カードとカードの間に見えるように調整（座布団キャラ等） */
+    right: 5%;
+    transform: rotate(5deg);
 }
 
 /* ── PROFILE ── */
-.deco-p1 {
-    width: 160px;
-    top: 2%;
-    right: 3%;
-    transform: rotate(12deg);
-    opacity: 0.85;
-    animation-delay: -2.5s;
-}
+.deco-p1 { width: 130px; top: 5%; right: 2%; transform: rotate(12deg); }
 
 /* ── SABOTEN/STUDIO ── */
-.deco-s1 {
-    width: 140px;
-    bottom: -5%;
-    left: -3%;
-    transform: rotate(-8deg);
-    opacity: 0.85;
-    animation-delay: -0.5s;
-}
+.deco-s1 { width: 130px; top: -15%; left: 5%; transform: rotate(-8deg); }
 
 /* ── GAME ── */
-.deco-g1 {
-    width: 130px;
-    top: 0%;
-    right: 2%;
-    transform: rotate(10deg);
-    opacity: 0.8;
-    animation-delay: -3.5s;
-}
+.deco-g1 { width: 110px; top: 2%; right: 5%; transform: rotate(10deg); }
 
-/* モバイル: 小さくして表示は維持 */
+/* モバイル: コンテンツが中央を占めるため、重なりを避けるためにさらに端へ、または上下へ */
 @media (max-width: 768px) {
-    .deco-h1  { width: 110px; }
-    .deco-h2  { width: 90px; }
-    .deco-h3  { width: 70px; }
-    .deco-n1  { width: 90px; }
-    .deco-l1  { width: 100px; left: 0%; }
-    .deco-l2  { width: 90px; right: 2%; }
-    .deco-p1  { width: 110px; right: 2%; }
-    .deco-s1  { width: 100px; left: 0%; }
-    .deco-g1  { width: 90px; right: 2%; }
+    .deco-h1  { width: 90px; left: 0; bottom: 0; opacity: 0.6; }
+    .deco-h2  { width: 70px; right: 0; top: 5%; opacity: 0.5; }
+    .deco-n1  { width: 70px; right: 0; top: 10%; opacity: 0.5; }
+    .deco-l1  { width: 80px; left: -5%; top: -5%; opacity: 0.5; }
+    .deco-l2  { width: 100px; right: -5%; bottom: -10%; opacity: 0.7; } /* 座布団キャラをあえて端へ */
+    .deco-p1  { width: 90px; right: 0; top: 0%; opacity: 0.6; }
+    .deco-s1  { width: 85px; left: -2%; top: -8%; opacity: 0.6; }
+    .deco-g1  { width: 80px; right: 0; top: -5%; opacity: 0.6; }
 }
 
 /* 極小スクリーンでは非表示 */
