@@ -4,623 +4,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SABOTEN - Dessert in Desert | 2026.5.10 RELEASE</title>
-    <meta name="description" content="SABOTENのニューミニアルバム「Dessert in Desert」2026年5月10日リリース。全国ツアー開催決定！">
+    <title>キヨシ 公式サイト</title>
+    <link rel="stylesheet" href="styles.css?v=202603231520">
+    <link rel="stylesheet" href="animations.css?v=202603231520">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Luckiest+Guy&family=Permanent+Marker&family=Noto+Sans+JP:wght@400;700;900&family=Outfit:wght@400;600;800&family=Dela+Gothic+One&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=RocknRoll+One&family=Yusei+Magic&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=4.2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
-    <nav class="hamburger-menu">
-        <div class="lang-switcher">
-            <button id="langBtn" class="lang-btn" aria-label="Switch to English" data-lang="ja">
-                <span class="lang-label lang-ja">JA</span>
-                <span class="lang-btn-indicator"></span>
-                <span class="lang-label lang-en">EN</span>
-            </button>
+    <!-- SVG Filter for Hand-drawn look -->
+    <svg style="display: none;">
+        <filter id="rough-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+        </filter>
+        <filter id="scribble-filter">
+            <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence"/>
+            <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+    </svg>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">キヨシ</a>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">HOME</a></li>
+                <li><a href="#news" class="nav-link">NEWS</a></li>
+                <li><a href="#live" class="nav-link">LIVE</a></li>
+                <li><a href="#profile" class="nav-link">PROFILE</a></li>
+                <li><a href="#saboten" class="nav-link">SABOTEN</a></li>
+                <li><a href="#studio" class="nav-link">STUDIO</a></li>
+                <li><a href="#game" class="nav-link">GAME</a></li>
+            </ul>
         </div>
-        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
     </nav>
 
-    <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close" id="menuClose" aria-label="Close Menu">×</button>
-        <ul class="menu-links">
-            <li><a href="#home">HOME</a></li>
-            <li><a href="#album">ALBUM</a></li>
-            <li><a href="#bundle">BUNDLE SET</a></li>
-            <li><a href="#video">VIDEO</a></li>
-            <li><a href="#review">REVIEW</a></li>
-            <li><a href="#comments">MESSAGE</a></li>
-            <li><a href="#game">GAME</a></li>
-            <li><a href="#tour">TOUR</a></li>
-        </ul>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <!-- Logos Only -->
-            <div class="hero-main-visual">
-                <div class="branding-group">
-                    <img src="media/SABOTEN_LOGO_2025_white.png" alt="SABOTEN" class="artist-logo-img">
-                    <div class="album-title-wrap">
-                        <img src="media/DessertinDesert.png" alt="Dessert in Desert" class="album-title-img">
-                        <span class="album-type-tag">mini album</span>
+    <!-- ========== HERO ========== -->
+    <section id="home" class="hero">
+        <!-- デコ素材 -->
+        <img src="media/素材-05.png" alt="" class="deco-fixed deco-h1" aria-hidden="true">
+        <img src="media/素材-07.png" alt="" class="deco-fixed deco-h2" aria-hidden="true">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="hero-text-content" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <h1 class="hero-logo-container" style="margin-bottom: -1rem;">
+                        <img src="media/素材-01.png" alt="キヨシ" class="hero-logo-img">
+                    </h1>
+                    <p class="hero-subtitle">SABOTEN Vo/Gt</p>
+                    <div class="hero-social-icons" style="display: flex; justify-content: center; gap: 1.2rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                        <a href="https://x.com/kiyoshi_SABOTEN" target="_blank" rel="noopener noreferrer" class="social-icon-link" data-label="X">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/kiyoshi.saboten.greenstudio/?hl=ja" target="_blank" rel="noopener noreferrer" class="social-icon-link" data-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@キヨシ一門" target="_blank" rel="noopener noreferrer" class="social-icon-link" data-label="YouTube">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="https://stand.fm/channels/5f6aadbef04555115d008468" target="_blank" rel="noopener noreferrer" class="social-icon-link" data-label="stand.fm">
+                            <i class="fa-solid fa-microphone"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <!-- Stamp: hero-contentの直接子 → hero-content(position:relative)基準で配置 -->
-            <div class="hero-release-stamp">
-                <span class="stamp-label">NEW RELEASE</span>
-                <span class="stamp-date">2026.05.10</span>
-            </div>
-
-            <!-- Catchphrase: 最下部フルブリード帯 -->
-            <div class="hero-footer-block">
-                <div class="hero-catchphrase">
-                    <div class="catchphrase-ribbon">
-                        <span class="ribbon-text" data-i18n="catchphrase">砂漠の中で見つけた、7つのデザート</span>
-                    </div>
+            <div class="hero-photo-wrap">
+                <div class="hero-photo-frame no-deco-frame">
+                    <img src="media/素材-02.png" alt="キヨシ" class="hero-photo no-background">
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">
+        <div class="scroll-down">
             <span>SCROLL</span>
-            <div class="scroll-line"></div>
+            <div class="scroll-arrow">↓</div>
         </div>
     </section>
 
-    <!-- Album Info Section -->
-    <section class="album-info" id="album">
-        <div class="section-watermark">DISCOGRAPHY</div>
-        <div class="section-divider-top"></div>
+    <!-- ========== NEWS ========== -->
+    <section id="news" class="section news-section deco-section">
+        <!-- デコ素材 -->
+        <img src="media/素材-06.png" alt="" class="deco-fixed deco-n1" aria-hidden="true">
         <div class="container">
-            <div class="album-visual">
-                <div class="album-watermark">2026.5.10</div>
-                <img src="media/cover.jpg" alt="Dessert in Desert Cover" class="album-cover">
-                <div class="album-glow"></div>
+            <div class="section-header">
+                <h2 class="section-title marker">NEWS</h2>
             </div>
-            <div class="album-details">
-                <div class="section-title-group">
-                    <span class="vertical-label">Album Info</span>
-                    <h2 class="section-title">Dessert in Desert<span class="cute-icon">♪</span></h2>
-                </div>
-                <p class="album-description" data-i18n="album-desc">
-                    2026年、SABOTENが贈る<br>
-                    ニューミニアルバム「Dessert in Desert」<br>
-                    砂漠のような日々の中で見つけた<br>
-                    希望、勇気、愛。<br>
-                    心の栄養となる、7つのデザート。<br>
-                    結成27年目の最高傑作。
-                </p>
-                <div class="tracklist">
-                    <h5>TRACK LIST</h5>
-                    <ol>
-                        <li data-i18n="track-1">さよなら、ありがとう</li>
-                        <li data-i18n="track-2">リユニバース</li>
-                        <li data-i18n="track-3">REMEMBER YOU <small>- 忌野 清志郎 cover -</small></li>
-                        <li data-i18n="track-4">何事もなかった顔</li>
-                        <li data-i18n="track-5">タイトロープ</li>
-                        <li data-i18n="track-6">つぼみ</li>
-                        <li data-i18n="track-7">赤春</li>
-                    </ol>
-                </div>
-                <div class="album-links">
-                    <a href="http://shop.pinefields.jp/?mode=cate&cbid=1082793&csid=0" class="btn btn-primary"
-                        target="_blank" rel="noopener" data-i18n="buy-btn">購入する</a>
-                </div>
+            <div class="news-grid">
+                <!-- news will be populated by script.js -->
             </div>
         </div>
     </section>
 
-    <!-- Bundle Set Section -->
-    <section class="bundle-section" id="bundle">
-        <div class="section-watermark">SPECIAL</div>
+    <!-- ========== LIVE ========== -->
+    <section id="live" class="section live-section deco-section">
+        <!-- デコ素材 -->
+        <img src="media/素材-04.png" alt="" class="deco-fixed deco-l1" aria-hidden="true">
+        <img src="media/素材-08.png" alt="" class="deco-fixed deco-l2" aria-hidden="true">
         <div class="container">
-            <div class="section-title-group centered">
-                <span class="vertical-label">LIMITED EDITION</span>
-                <h3 class="section-title">BUNDLE SET <span class="cute-icon">🎁</span></h3>
+            <div class="section-header">
+                <h2 class="section-title marker">LIVE SCHEDULE</h2>
+                <p class="section-subtitle hand-drawn">弾き語り / ソロ公演情報</p>
             </div>
-            
-            <div class="bundle-content">
-                <div class="bundle-images">
-                    <img src="media/bundle-set-1.jpg" alt="Bundle Set 1" class="bundle-img">
-                    <img src="media/bundle-set-2.jpg" alt="Bundle Set 2" class="bundle-img">
+            <div class="live-grid">
+                <!-- Data populated by script.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PROFILE ========== -->
+    <section id="profile" class="section profile-section deco-section">
+        <!-- デコ素材 -->
+        <img src="media/素材-07.png" alt="" class="deco-fixed deco-p1" aria-hidden="true">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title marker">PROFILE</h2>
+            </div>
+            <div class="profile-content">
+                <div class="profile-image-wrap">
+                    <div class="tape tape-top-left"></div>
+                    <div class="tape tape-top-right"></div>
+                    <img src="media/キヨシIMG_7988.JPG" alt="キヨシ" class="profile-img">
                 </div>
-                
-                <div class="bundle-action">
-                    <p class="bundle-desc" data-i18n="bundle-desc">数量限定！特別なバンドルセットのご予約・ご購入はこちらから！</p>
-                    <a href="https://shop.pinefields.jp/?mode=cate&cbid=1082793&csid=0" class="btn btn-primary bundle-btn" target="_blank" rel="noopener" data-i18n="bundle-buy-btn">バンドルセットを予約・購入する</a>
+                <div class="profile-text-wrap">
+                    <p class="hand-drawn-p">SABOTEN ボーカル＆ギター。<br>個人としても「キヨシ一門」としてYouTubeやSNSで活動中！</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Video Content Section -->
-    <section class="video-section" id="video">
-        <div class="section-watermark">MOVIES</div>
+    <!-- ========== SABOTEN & GREEN STUDIO ========== -->
+    <section id="saboten" class="section links-section deco-section">
+        <!-- デコ素材 -->
+        <img src="media/素材-03.png" alt="" class="deco-fixed deco-s1" aria-hidden="true">
         <div class="container">
-            <div class="video-grid">
-                <div class="video-item">
-                    <div class="section-title-group">
-                        <span class="vertical-label">BEHIND THE SCENES</span>
-                        <h3 class="section-title">Making Video <span class="cute-icon">📸</span></h3>
-                    </div>
-                    <div class="video-placeholder-wrap">
-                        <div class="video-placeholder making">
-                            <p class="coming-soon">COMING SOON...</p>
-                            <div class="play-indicator"></div>
-                        </div>
-                        <div class="video-label">MAKING OF "DESSERT IN DESERT"</div>
-                    </div>
+            <div class="link-cards">
+                <a href="https://sabotenrock.com" target="_blank" rel="noopener noreferrer" class="link-card">
+                    <span class="link-card-label">BAND</span>
+                    <h2 class="link-card-title">SABOTEN</h2>
+                    <p class="link-card-sub">1999年結成。公式サイトはこちら</p>
+                    <span class="link-card-arrow">→</span>
+                </a>
+                <a id="studio" href="http://www.greenmusicstudio.jp/" target="_blank" rel="noopener noreferrer" class="link-card link-card--green">
+                    <span class="link-card-label">STUDIO</span>
+                    <h2 class="link-card-title">GREEN STUDIO</h2>
+                    <p class="link-card-sub">キヨシがオーナーのリハーサルスタジオ</p>
+                    <span class="link-card-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- ========== STORE ========== -->
+    <section id="store" class="section store-section deco-section">
+        <div class="container">
+            <div class="store-banner">
+                <div class="store-banner-inner">
+                    <span class="store-badge">OFFICIAL GOODS SHOP</span>
+                    <h2 class="store-title">キヨシ一門 STORE</h2>
+                    <p class="store-desc">キヨシ一門のオリジナル最新グッズやCDはこちらでチェック！</p>
+                    <a href="https://kiyoshiichimon.stores.jp" target="_blank" rel="noopener noreferrer" class="store-btn">ショップを見る <i class="fas fa-external-link-alt"></i></a>
                 </div>
-                <div class="video-item">
-                    <div class="section-title-group">
-                        <span class="vertical-label">MUSIC VIDEO</span>
-                        <h3 class="section-title">Music Video <span class="cute-icon">🎬</span></h3>
-                    </div>
-                    <div class="video-placeholder-wrap">
-                        <div class="video-placeholder">
-                            <p class="coming-soon">COMING SOON...</p>
-                            <div class="play-indicator"></div>
-                        </div>
-                        <div class="video-label">OFFICIAL MUSIC VIDEO</div>
-                    </div>
-                </div>
+                <!-- Optional decoration for store -->
+                <img src="media/素材-06.png" class="deco-fixed deco-store" aria-hidden="true" alt="">
             </div>
         </div>
     </section>
 
-    <!-- Member Review Section -->
-    <section class="member-review" id="review">
+    <!-- ========== GAME ========== -->
+    <section id="game" class="section game-section deco-section">
+        <!-- デコ素材 -->
+        <img src="media/素材-09.png" alt="" class="deco-fixed deco-g1" aria-hidden="true">
         <div class="container">
-            <div class="section-title-group centered">
-                <span class="vertical-label">SELF LINER NOTES</span>
-                <h3 class="section-title">REVIEW <span class="cute-icon">♪</span></h3>
+            <div class="section-header">
+                <h2 class="section-title marker">🌵 サボテンジャンプ</h2>
+                <p class="section-subtitle hand-drawn">キヨシのサボテンを操作してジャンプ！ハイスコアを狙え！</p>
             </div>
-            <h4 class="review-subtitle">Member Track-by-Track Review</h4>
-
-            <div class="review-grid">
-                <!-- Track 1 -->
-                <div class="review-item">
-                    <span class="track-number">01</span>
-                    <h5 class="track-name" data-i18n="track-1">さよなら、ありがとう</h5>
-                    <div class="review-content">
-                        <p class="coming-soon">COMING SOON...</p>
+            <div class="game-wrapper">
+                <div class="game-hud">
+                    <div class="game-hud-item">
+                        <span class="game-hud-label">SCORE</span>
+                        <span class="game-hud-value" id="game-score">0</span>
                     </div>
-                    <div class="preview-player">
-                        <div class="player-controls">
-                            <button class="play-btn" title="PREVIEW"><span>▶</span></button>
-                            <span class="play-label">LISTEN PREVIEW</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="player-time">0:10</div>
+                    <div class="game-hud-title">SABOTEN JUMP</div>
+                    <div class="game-hud-item">
+                        <span class="game-hud-label">BEST</span>
+                        <span class="game-hud-value" id="game-hiscore">0</span>
                     </div>
                 </div>
-                <!-- Track 2 -->
-                <div class="review-item">
-                    <span class="track-number">02</span>
-                    <h5 class="track-name" data-i18n="track-2">リユニバース</h5>
-                    <div class="review-content">
-                        <p class="coming-soon">COMING SOON...</p>
-                    </div>
-                    <div class="preview-player">
-                        <div class="player-controls">
-                            <button class="play-btn" title="PREVIEW"><span>▶</span></button>
-                            <span class="play-label">LISTEN PREVIEW</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="player-time">0:10</div>
-                    </div>
-                </div>
-                <!-- Track 3 -->
-                <div class="review-item">
-                    <span class="track-number">03</span>
-                    <h5 class="track-name" data-i18n="track-3">REMEMBER YOU <small>- 忌野 清志郎 cover -</small></h5>
-                    <div class="review-content">
-                        <p class="coming-soon">COMING SOON...</p>
-                    </div>
-                    <div class="preview-player">
-                        <div class="player-controls">
-                            <button class="play-btn" title="PREVIEW"><span>▶</span></button>
-                            <span class="play-label">LISTEN PREVIEW</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="player-time">0:10</div>
-                    </div>
-                </div>
-                <!-- Track 4 -->
-                <div class="review-item">
-                    <span class="track-number">04</span>
-                    <h5 class="track-name" data-i18n="track-4">何事もなかった顔</h5>
-                    <div class="review-content">
-                        <p class="coming-soon">COMING SOON...</p>
-                    </div>
-                    <div class="preview-player">
-                        <div class="player-controls">
-                            <button class="play-btn" title="PREVIEW"><span>▶</span></button>
-                            <span class="play-label">LISTEN PREVIEW</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="player-time">0:10</div>
-                    </div>
-                </div>
-                <!-- Track 5 -->
-                <div class="review-item">
-                    <span class="track-number">05</span>
-                    <h5 class="track-name" data-i18n="track-5">タイトロープ</h5>
-                    <div class="review-content">
-                        <p class="coming-soon">COMING SOON...</p>
-                    </div>
-                    <div class="preview-player">
-                        <div class="player-controls">
-                            <button class="play-btn" title="PREVIEW"><span>▶</span></button>
-                            <span class="play-label">LISTEN PREVIEW</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="player-time">0:10</div>
-                    </div>
-                </div>
-                <!-- Track 6 -->
-                <div class="review-item">
-                    <span class="track-number">06</span>
-                    <h5 class="track-name" data-i18n="track-6">つぼみ</h5>
-                    <div class="review-content">
-                        <p class="coming-soon">COMING SOON...</p>
-                    </div>
-                    <div class="preview-player">
-                        <div class="player-controls">
-                            <button class="play-btn" title="PREVIEW"><span>▶</span></button>
-                            <span class="play-label">LISTEN PREVIEW</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="player-time">0:10</div>
-                    </div>
-                </div>
-                <!-- Track 7 -->
-                <div class="review-item">
-                    <span class="track-number">07</span>
-                    <h5 class="track-name" data-i18n="track-7">赤春</h5>
-                    <div class="review-content">
-                        <p class="coming-soon">COMING SOON...</p>
-                    </div>
-                    <div class="preview-player">
-                        <div class="player-controls">
-                            <button class="play-btn" title="PREVIEW"><span>▶</span></button>
-                            <span class="play-label">LISTEN PREVIEW</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="player-time">0:10</div>
-                    </div>
+                <canvas id="game-canvas"></canvas>
+                <div class="game-jump-area">
+                    <button id="jump-btn" class="jump-btn">
+                        🌵 JUMP！
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Member Comments Section -->
-    <section class="member-comments" id="comments">
-        <div class="container">
-            <div class="section-title-group centered">
-                <span class="vertical-label">SPECIAL INTERVIEW</span>
-                <h3 class="section-title">MESSAGE <span class="cute-icon">♥</span></h3>
-            </div>
-            <h4 class="comments-subtitle">Member Comments for "Dessert in Desert"</h4>
-
-            <div class="comments-container">
-                <!-- Member 1: Kiyoshi -->
-                <div class="comment-card">
-                    <div class="member-info">
-                        <img src="media/キヨシ.png" alt="キヨシ" class="member-image">
-                        <div class="member-name-group">
-                            <span class="member-role">Vocal / Guitar</span>
-                            <h5 class="member-name" data-i18n="name-kiyoshi">キヨシ</h5>
-                        </div>
-                    </div>
-                    <div class="comment-bubble">
-                        <div class="comment-content">
-                            <p class="comment-text" data-i18n="comment-kiyoshi">
-                                今作は喜怒哀楽に寄り添うことをテーマに楽曲作り、楽曲選びを慎重に行いました！重すぎず軽すぎない、メンバーがとてもリラックスした状態で録音出来たと思います！<br>そして音質に関してはより人の演奏らしさを大切に、あえて無駄な加工をせずにバンドの空気感が伝わる仕上がりにこだわりました！<br>27年目のSABOTENの最高傑作をぜひ楽しんでください♪
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Member 2: Yasso -->
-                <div class="comment-card reverse">
-                    <div class="member-info">
-                        <img src="media/ヤッソー.png" alt="ヤッソー" class="member-image">
-                        <div class="member-name-group yasso-label">
-                            <span class="member-role">Bass / Chorus</span>
-                            <h5 class="member-name" data-i18n="name-yasso">ヤッソー</h5>
-                        </div>
-                    </div>
-                    <div class="comment-bubble">
-                        <div class="comment-content">
-                            <p class="comment-text" data-i18n="comment-yasso">
-                                制作の時点で選曲からかなり悩み、最終当初の予定より1曲増え選曲しました。<br>今回はコーラスワークにサケのアイデアも入れて作り上げました。<br>"Dessert in
-                                Desert"<br>1曲ごとに色んな表情があり、アルバムを通して聴き応え抜群です。<br>皆んなに喜んでもらえたら元気になってくれたら嬉しいです。<br>聴いてくれているみんなの顔を想像すると、それだけでワクワクします。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Member 3: Sakecode -->
-                <div class="comment-card">
-                    <div class="member-info">
-                        <img src="media/サケ.png" alt="サケ・スイーツ" class="member-image">
-                        <div class="member-name-group sake-label">
-                            <span class="member-role">Drums / Chorus</span>
-                            <h5 class="member-name" data-i18n="name-sakecode">サケ・スイーツ</h5>
-                        </div>
-                    </div>
-                    <div class="comment-bubble">
-                        <div class="comment-content">
-                            <p class="comment-text" data-i18n="comment-sakecode">
-                                とにかくおもしろいCDが出来ました。全曲ともそれぞれの表情が引き立ってそれぞれが引き立て合っておもしろさがすごいです。<br>作ってる時から録ってる時の雰囲気も詰める事が出来た気がします。<br>ライブでの表情の変化も楽しみです。<br>Dessert
-                                in Desertで遊びましょう。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mini Game Section -->
-    <section class="mini-game" id="game">
-        <div class="container">
-            <div class="section-title-group centered">
-                <span class="vertical-label">PLAY TIME</span>
-                <h3 class="section-title">MINI GAME <span class="cute-icon">🌵</span></h3>
-            </div>
-            
-            <div class="game-container">
-                <div id="game-start-screen" class="game-screen active">
-                    <h4 class="game-title">砂漠のデザートキャッチ</h4>
-                    <p class="game-desc" style="margin-bottom: 0.5rem;" data-i18n="game-desc">落ちてくるデザートをキャッチしてスコアを稼ごう！<br>サボテンには気をつけてね！<br>7種類のデザートをすべて集めるとクリア！</p>
-                    
-                    <div class="character-select">
-                        <p class="select-title" data-i18n="game-select-char">キャラクターを選んでね</p>
-                        <div class="char-options">
-                            <label class="char-option">
-                                <input type="radio" name="player-char" value="media/キヨシ.png" checked>
-                                <img src="media/キヨシ.png" alt="キヨシ">
-                                <span data-i18n="name-kiyoshi">キヨシ</span>
-                            </label>
-                            <label class="char-option">
-                                <input type="radio" name="player-char" value="media/ヤッソー.png">
-                                <img src="media/ヤッソー.png" alt="ヤッソー">
-                                <span data-i18n="name-yasso">ヤッソー</span>
-                            </label>
-                            <label class="char-option">
-                                <input type="radio" name="player-char" value="media/サケ.png">
-                                <img src="media/サケ.png" alt="サケ">
-                                <span data-i18n="name-sake">サケ</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <button id="game-start-btn" class="btn btn-primary" data-i18n="game-start" style="margin-top: 1rem;">GAME START</button>
-                </div>
-                
-                <div id="game-play-screen" class="game-screen">
-                    <div class="game-stats">
-                        <div class="game-score">
-                            <div style="font-size: 0.8rem; margin-bottom: 2px;">SCORE: <span id="game-score-val">0</span></div>
-                            <div id="dessert-slots" style="display: flex; gap: 4px; font-size: 1.2rem;">
-                                <span class="slot" style="opacity:0.3; filter:grayscale(1);" data-type="🍰">❓</span>
-                                <span class="slot" style="opacity:0.3; filter:grayscale(1);" data-type="🍮">❓</span>
-                                <span class="slot" style="opacity:0.3; filter:grayscale(1);" data-type="🍨">❓</span>
-                                <span class="slot" style="opacity:0.3; filter:grayscale(1);" data-type="🍩">❓</span>
-                                <span class="slot" style="opacity:0.3; filter:grayscale(1);" data-type="🧁">❓</span>
-                                <span class="slot" style="opacity:0.3; filter:grayscale(1);" data-type="🍪">❓</span>
-                                <span class="slot" style="opacity:0.3; filter:grayscale(1);" data-type="🥞">❓</span>
-                            </div>
-                        </div>
-                        <div class="game-lives">Life: <span id="game-lives-val">❤️❤️❤️</span></div>
-                    </div>
-                    <div id="game-area">
-                        <div id="game-player">
-                            <img src="media/キヨシ.png" alt="Player" id="player-img">
-                        </div>
-                    </div>
-                    <div class="mobile-controls">
-                        <button id="btn-left" class="control-btn">◀</button>
-                        <button id="btn-jump" class="control-btn" style="flex: 0.5; font-weight: bold; font-family: 'Outfit', sans-serif;">JUMP</button>
-                        <button id="btn-right" class="control-btn">▶</button>
-                    </div>
-                </div>
-
-                <div id="game-over-screen" class="game-screen">
-                    <h4 class="game-over-title">GAME OVER</h4>
-                    <p class="game-desc" data-i18n="game-over-desc">サボテンに当たっちゃった...</p>
-                    <button id="game-retry-btn" class="btn btn-primary" data-i18n="game-retry">RETRY</button>
-                </div>
-
-                <div id="game-clear-screen" class="game-screen">
-                    <h4 class="game-clear-title">CLEAR!</h4>
-                    <p class="game-desc" data-i18n="game-clear-desc">7種類のデザートをコンプリートした！<br>おめでとう！限定壁紙をプレゼント！</p>
-                    <div class="prize-preview" style="margin: 10px 0; animation: floatingHero 3s infinite ease-in-out;">
-                        <img src="media/wallpaper2.png" alt="Clear Prize" style="max-height: 200px; width: auto; border: 4px solid #fff; box-shadow: 4px 4px 0 #000; border-radius: 8px;">
-                    </div>
-                    <a href="media/wallpaper2.png" download="SABOTEN_Dessert_in_Desert_Wallpaper2.png" class="btn btn-primary" style="margin-top: 15px;" data-i18n="game-dl">壁紙をダウンロード</a>
-                    <button id="game-replay-btn" class="btn btn-secondary" style="margin-top: 10px;" data-i18n="game-play-again">もう一度プレイ</button>
-                </div>
-            </div>
-
-            <div class="game-rules-box">
-                <h4 class="rules-title" data-i18n="game-rules-title">【遊び方＆ルール】</h4>
-                <ul class="rules-list">
-                    <li data-i18n="game-rule-1">空から降ってくるデザート🍰🍩をキャッチしよう！</li>
-                    <li data-i18n="game-rule-2">左右キー（スマホは画面下の◀▶）でキャラクターを動かします。上キー（JUMPボタン）でジャンプ！</li>
-                    <li data-i18n="game-rule-3">サボテン🌵に当たるとライフ減少！3回当たるとゲームオーバー。</li>
-                    <li data-i18n="game-rule-4">7種類のデザートをコンプリートするとクリア！特製壁紙をプレゼント🎁</li>
-                    <li data-i18n="game-rule-5">💩や🚽に当たると一発でゲームオーバー！気をつけて！</li>
-                    <li>⭐光る「フィーバーデザート」を取ると少しの間無敵＆移動速度アップ！</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tour Section -->
-    <section class="tour" id="tour">
-        <div class="tour-header">
-            <h3 class="section-title-large">Dessert in Desert TOUR</h3>
-            <p class="tour-subtitle" data-i18n="tour-sub">全国ツアー開催決定</p>
-            <div class="tour-flyer">
-                <img src="media/tour.jpg" alt="Dessert in Desert TOUR Flyer" class="flyer-img">
-            </div>
-        </div>
-        <div class="container">
-            <div class="tour-dates">
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13/"
-                    class="tour-item oneman" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"><span class="tour-badge">ONEMAN LIVE</span></div>
-                    <div class="tour-date">6.27 <span class="day">SAT</span></div>
-                    <div class="tour-venue">心斎橋LIVE HOUSE PANGEA</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">7.11 <span class="day">SAT</span></div>
-                    <div class="tour-venue">池袋LIVE GARAGE ADM</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">7.12 <span class="day">SUN</span></div>
-                    <div class="tour-venue">熊谷HEAVEN'S ROCK VJ-1</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">7.25 <span class="day">SAT</span></div>
-                    <div class="tour-venue">福岡QUEBLICK</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">7.26 <span class="day">SUN</span></div>
-                    <div class="tour-venue">周南LIVE RISE SHUNAN</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-3/"
-                    class="tour-item oneman" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"><span class="tour-badge">ONEMAN LIVE</span></div>
-                    <div class="tour-date">8.8 <span class="day">SAT</span></div>
-                    <div class="tour-venue">名古屋RAD SEVEN</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">9.5 <span class="day">SAT</span></div>
-                    <div class="tour-venue">出雲APOLLO</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">9.6 <span class="day">SUN</span></div>
-                    <div class="tour-venue">広島ALMIGHTY</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">9.12 <span class="day">SAT</span></div>
-                    <div class="tour-venue">磐田FM STAGE</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2-3/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">9.13 <span class="day">SUN</span></div>
-                    <div class="tour-venue">千葉LOOK</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">10.10 <span class="day">SAT</span></div>
-                    <div class="tour-venue">京都MUSE</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">10.11 <span class="day">SUN</span></div>
-                    <div class="tour-venue">豊橋CLUB KNOT</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2-2-2-2/"
-                    class="tour-item oneman" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"><span class="tour-badge">ONEMAN LIVE</span></div>
-                    <div class="tour-date">10.18 <span class="day">SUN</span></div>
-                    <div class="tour-venue">新宿ACB</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2-2-2-2-2-3/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">11.7 <span class="day">SAT</span></div>
-                    <div class="tour-venue">水戸LIGHT HOUSE</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2-2-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">11.8 <span class="day">SUN</span></div>
-                    <div class="tour-venue">横浜F.A.D</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2-2-2-2-2-2/"
-                    class="tour-item" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"></div>
-                    <div class="tour-date">11.14 <span class="day">SAT</span></div>
-                    <div class="tour-venue">高松TOONICE</div>
-                </a>
-                <a href="https://sabotenrock.com/live/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab%e6%9c%aa%e5%ae%9a-13-2-2-2-2-2-2-2-2-2-2-2-2-2/" class="tour-item tour-final" target="_blank" rel="noopener">
-                    <div class="tour-badge-wrapper"><span class="tour-badge final">TOUR FINAL</span></div>
-                    <div class="tour-date">11.22 <span class="day">SUN</span></div>
-                    <div class="tour-venue">GORILLA HALL OSAKA</div>
-                </a>
-            </div>
+            <p class="game-hint hand-drawn">スマホ：ボタンでジャンプ！　PC：スペース / クリック！</p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <p class="footer-logo">SABOTEN</p>
-                <p class="footer-album">Dessert in Desert</p>
-                <div class="footer-social">
-                    <a href="https://twitter.com/SABOTENofficial" class="social-link" target="_blank"
-                        rel="noopener">Twitter</a>
-                    <a href="https://instagram.com/saboten_official" class="social-link" target="_blank"
-                        rel="noopener">Instagram</a>
-                    <a href="https://www.youtube.com/@PinefieldsKobe" class="social-link" target="_blank"
-                        rel="noopener">YouTube</a>
-                </div>
-                <div class="footer-counter">
-                    <img src="https://hits.sh/saboten-dessert-in-desert.com.svg?style=flat-square&label=VISITORS&color=FF6B35&labelColor=1a252f" alt="Site Visitors">
-                </div>
+            <div class="footer-bottom">
+                <p class="hand-drawn-p">&copy; 2026 キヨシ Official.</p>
             </div>
-            <p class="copyright">&copy; 2026 SABOTEN. All rights reserved.</p>
         </div>
     </footer>
 
