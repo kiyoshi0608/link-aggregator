@@ -1,697 +1,490 @@
-// Main Initialization
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Album Cover Image Loading
-    const img = document.querySelector('.album-cover');
-    if (img) {
-        img.src = 'media/cover.jpg';
-        img.style.opacity = '0';
-        img.style.transition = 'opacity 0.6s ease';
-        img.onload = () => { img.style.opacity = '1'; };
-    }
+// Hamburger Menu Toggle
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.getElementById('nav-menu');
 
-    // 2. Hamburger Menu Logic
-    const menuToggle = document.getElementById('menuToggle');
-    const menuClose = document.getElementById('menuClose');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const menuLinks = document.querySelectorAll('.menu-links a');
-
-    const closeMenu = () => {
-        menuToggle.classList.remove('is-active');
-        menuOverlay.classList.remove('is-open');
-        document.body.classList.remove('no-scroll');
-    };
-
-    if (menuToggle && menuOverlay) {
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menuToggle.classList.toggle('is-active');
-            menuOverlay.classList.toggle('is-open');
-            document.body.classList.toggle('no-scroll');
-        });
-
-        if (menuClose) {
-            menuClose.addEventListener('click', (e) => {
-                e.stopPropagation();
-                closeMenu();
-            });
-        }
-
-        menuOverlay.addEventListener('click', (e) => {
-            if (e.target === menuOverlay) { closeMenu(); }
-        });
-
-        menuLinks.forEach(link => { link.addEventListener('click', closeMenu); });
-    }
-
-    // 3. Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-        });
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        menuToggle.classList.toggle('open');
     });
+}
 
-    // 4. Intersection Observer for animations
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
-
-    document.querySelectorAll('.tour-item, .album-details, .comment-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+// Close menu when clicking links
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        if (navMenu) navMenu.classList.remove('active');
+        if (menuToggle) menuToggle.classList.remove('open');
     });
-
-    // ─────────────────────────────────────────────
-    // 5. Language Switcher (i18n)
-    // ─────────────────────────────────────────────
-    const translations = {
-        ja: {
-            'catchphrase': '砂漠の中で見つけた、7つのデザート',
-            'album-desc': '2026年、SABOTENが贈る<br>ニューミニアルバム「Dessert in Desert」<br>砂漠のような日々の中で見つけた<br>希望、勇気、愛。<br>心の栄養となる、7つのデザート。<br>結成27年目の最高傑作。',
-            'buy-btn': '購入する',
-            'tour-sub': '全国ツアー開催決定',
-            'track-1': 'さよなら、ありがとう',
-            'track-2': 'リユニバース',
-            'track-3': 'REMEMBER YOU <small>- 忌野 清志郎 cover -</small>',
-            'track-4': '何事もなかった顔',
-            'track-5': 'タイトロープ',
-            'track-6': 'つぼみ',
-            'track-7': '赤春',
-            'comment-kiyoshi': '今作は喜怒哀楽に寄り添うことをテーマに楽曲作り、楽曲選びを慎重に行いました！重すぎず軽すぎない、メンバーがとてもリラックスした状態で録音出来たと思います！<br>そして音質に関してはより人の演奏らしさを大切に、あえて無駄な加工をせずにバンドの空気感が伝わる仕上がりにこだわりました！<br>27年目のSABOTENの最高傑作をぜひ楽しんでください♪',
-            'comment-yasso': '制作の時点で選曲からかなり悩み、最終当初の予定より1曲増え選曲しました。<br>今回はコーラスワークにサケのアイデアも入れて作り上げました。<br>"Dessert in Desert"<br>1曲ごとに色んな表情があり、アルバムを通して聴き応え抜群です。<br>皆んなに喜んでもらえたら元気になってくれたら嬉しいです。<br>聴いてくれているみんなの顔を想像すると、それだけでワクワクします。',
-            'comment-sakecode': 'とにかくおもしろいCDが出来ました。全曲ともそれぞれの表情が引き立ってそれぞれが引き立て合っておもしろさがすごいです。<br>作ってる時から録ってる時の雰囲気も詰める事が出来た気がします。<br>ライブでの表情の変化も楽しみです。<br>Dessert in Desertで遊びましょう。',
-            'game-desc': '落ちてくるデザートをキャッチしてスコアを稼ごう！<br>サボテンには気をつけてね！<br>7種類のデザートをすべて集めるとクリア！',
-            'game-start': 'GAME START',
-            'game-over-desc': 'サボテンに当たっちゃった...',
-            'game-retry': 'RETRY',
-            'game-clear-desc': '7種類のデザートをコンプリートした！<br>おめでとう！限定壁紙をプレゼント！',
-            'game-dl': '壁紙をダウンロード',
-            'game-play-again': 'もう一度プレイ',
-            'game-rules-title': '【遊び方＆ルール】',
-            'game-rule-1': '空から降ってくるデザート🍰🍩をキャッチしよう！',
-            'game-rule-2': '左右キー（スマホは画面下の◀▶）でキャラクターを動かします。',
-            'game-rule-3': 'サボテン🌵に当たるとライフ減少！3回当たるとゲームオーバー。',
-            'game-rule-4': '7種類のデザートをコンプリートするとクリア！特製壁紙をプレゼント🎁',
-            'game-rule-5': '💩や🚽に当たると一発でゲームオーバー！気をつけて！',
-            'game-select-char': 'キャラクターを選んでね',
-            'bundle-desc': '数量限定！特別なバンドルセットのご予約・ご購入はこちらから！',
-            'bundle-buy-btn': 'バンドルセットを予約・購入する',
-            'name-kiyoshi': 'キヨシ',
-            'name-yasso': 'ヤッソー',
-            'name-sakecode': 'サケ・スイーツ',
-            'name-sake': 'サケ',
-            'btn-label': 'EN',
-            'btn-aria': 'Switch to English',
-            'html-lang': 'ja'
-        },
-        en: {
-            'catchphrase': 'Seven Desserts Found in the Desert',
-            'album-desc': 'In 2026, SABOTEN proudly presents its new mini album<br>"Dessert in Desert."<br><br>In the desert-like days of life,<br>we discovered hope, courage, and love.<br><br>Seven desserts to nourish the heart.<br><br>The finest work from SABOTEN<br>in our 27th year as a band.',
-            'buy-btn': 'Buy Now',
-            'tour-sub': '"Dessert in Desert" Japan Tour — Coming Soon',
-            'track-1': 'Goodbye, Thank You',
-            'track-2': 'Reuniverse',
-            'track-3': 'REMEMBER YOU <small>- Kiyoshiro Imawano Cover -</small>',
-            'track-4': 'A Straight Face',
-            'track-5': 'Tightrope',
-            'track-6': 'The Bud',
-            'track-7': 'Sekishun',
-            'comment-kiyoshi': "For this album, we set out to create songs that stay close to people's emotions—through joy, anger, sadness, and everything in between.<br><br>We carefully chose each track so the album would feel balanced, never too heavy and never too light.<br><br>During recording, the band felt incredibly relaxed, and we think that atmosphere naturally comes through in the sound.<br><br>Rather than relying on excessive production, we focused on keeping the performances as natural as possible so you can really feel the band's atmosphere.<br><br>We hope you enjoy what we believe is SABOTEN's finest work yet, now in our 27th year as a band.",
-            'comment-yasso': "While making this album, we spent a long time choosing the songs, and in the end we decided to include one more track than originally planned.<br><br>This time, Sake also brought some great ideas to the chorus arrangements, which helped shape the songs in a new way.<br><br>Each track has its own character, and the album is a great listen from start to finish.<br><br>We’d be really happy if these songs bring joy and energy to everyone who listens.<br><br>Just imagining the faces of people listening to the album already makes us excited.",
-            'comment-sakecode': "This turned out to be a really fun album.<br><br>Every track has its own personality,<br>and together they create something<br>very unique and exciting.<br><br>I think the atmosphere we had<br>while making and recording this music<br>is fully captured in the album.<br><br>I'm also really looking forward<br>to how these songs will evolve live.<br><br>Let's enjoy \"Dessert in Desert\" together.",
-            'game-desc': 'Catch falling desserts to score points!<br>Watch out for the cacti!<br>Collect all 7 types of desserts to clear the game!',
-            'game-start': 'GAME START',
-            'game-over-desc': 'You hit a cactus...',
-            'game-retry': 'RETRY',
-            'game-clear-desc': 'You collected all 7 types of desserts!<br>Congratulations! Here is your exclusive wallpaper!',
-            'game-dl': 'Download Wallpaper',
-            'game-play-again': 'Play Again',
-            'game-rules-title': '[ How to Play & Rules ]',
-            'game-rule-1': 'Catch the falling desserts 🍰🍩 from the sky!',
-            'game-rule-2': 'Use Left/Right keys (or ◀▶ buttons on mobile) to move your character.',
-            'game-rule-3': 'Hitting a cactus 🌵 costs a life! 3 hits and game over.',
-            'game-rule-4': 'Collect all 7 different desserts to clear the game! Win a special wallpaper! 🎁',
-            'game-rule-5': 'Hitting 💩 or 🚽 means instant game over! Watch out!',
-            'game-select-char': 'Choose your character',
-            'bundle-desc': 'Limited quantity! Pre-order/purchase your special bundle set here!',
-            'bundle-buy-btn': 'Pre-order / Purchase Bundle Set',
-            'name-kiyoshi': 'KIYOSHI',
-            'name-yasso': 'YASSO',
-            'name-sakecode': 'SAKE-SWEETS',
-            'name-sake': 'SAKE',
-            'btn-label': 'JA',
-            'btn-aria': '日本語に切り替え',
-            'html-lang': 'en'
-        }
-    };
-
-    const langBtn = document.getElementById('langBtn');
-
-    const applyLanguage = (lang, animate) => {
-        const t = translations[lang];
-        if (!t) return;
-
-        document.documentElement.lang = t['html-lang'];
-        const targets = document.querySelectorAll('[data-i18n]');
-
-        if (animate) {
-            targets.forEach(el => {
-                el.style.transition = 'opacity 0.2s ease';
-                el.style.opacity = '0';
-            });
-            setTimeout(() => {
-                targets.forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if (t[key] !== undefined) el.innerHTML = t[key];
-                });
-                requestAnimationFrame(() => {
-                    targets.forEach(el => { el.style.opacity = '1'; });
-                });
-            }, 220);
-        } else {
-            targets.forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key] !== undefined) el.innerHTML = t[key];
-            });
-        }
-
-        if (langBtn) {
-            // ✅ textContent は設定しない（子spanを上書きしてしまうため）
-            langBtn.setAttribute('aria-label', t['btn-aria']);
-            langBtn.dataset.lang = lang;
-            langBtn.classList.toggle('lang-en-active', lang === 'en');
-        }
-
-        localStorage.setItem('saboten-lang', lang);
-    };
-
-    // Load saved preference (default: Japanese)
-    const savedLang = localStorage.getItem('saboten-lang') || 'ja';
-    applyLanguage(savedLang, false);
-
-    if (langBtn) {
-        langBtn.addEventListener('click', () => {
-            const current = langBtn.dataset.lang || 'ja';
-            applyLanguage(current === 'ja' ? 'en' : 'ja', true);
-        });
-    }
-
-    // ─────────────────────────────────────────────
-    // 6. Mini Game Logic
-    // ─────────────────────────────────────────────
-    const gameStartBtn = document.getElementById('game-start-btn');
-    const gameRetryBtn = document.getElementById('game-retry-btn');
-    const gameReplayBtn = document.getElementById('game-replay-btn');
-    
-    if (gameStartBtn) {
-        const screens = document.querySelectorAll('.game-screen');
-        const gameArea = document.getElementById('game-area');
-        const player = document.getElementById('game-player');
-        const scoreVal = document.getElementById('game-score-val');
-        const livesVal = document.getElementById('game-lives-val');
-        const btnLeft = document.getElementById('btn-left');
-        const btnRight = document.getElementById('btn-right');
-        const btnJump = document.getElementById('btn-jump');
-        
-        let gameState = 'start';
-        let score = 0;
-        let lives = 3;
-        let items = [];
-        let playerX = 50;
-        let playerY = 0;
-        let playerVelocity = 0;
-        let playerVelocityY = 0;
-        let isJumping = false;
-        let isFever = false;
-        let feverTimeout;
-        let collectedTypes = new Set();
-        let gameLoop;
-        let spawnTimeout;
-        let spawnRate = 1200;
-        let gameTime = 0;
-        const dessertTypes = ['🍰', '🍮', '🍨', '🍩', '🧁', '🍪', '🥞'];
-        const deathTypes = ['💩', '🚽'];
-
-        // Audio System Setup
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        let actx;
-        const playSound = (type) => {
-            if (!actx) actx = new AudioContext();
-            if (actx.state === 'suspended') actx.resume();
-            const osc = actx.createOscillator();
-            const gain = actx.createGain();
-            osc.connect(gain);
-            gain.connect(actx.destination);
-            const now = actx.currentTime;
-            
-            if (type === 'catch') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(800, now); osc.frequency.exponentialRampToValueAtTime(1500, now + 0.1);
-                gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                osc.start(now); osc.stop(now + 0.1);
-            } else if (type === 'hit') {
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.exponentialRampToValueAtTime(40, now + 0.2);
-                gain.gain.setValueAtTime(0.3, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-                osc.start(now); osc.stop(now + 0.2);
-            } else if (type === 'clear') {
-                osc.type = 'triangle'; osc.frequency.setValueAtTime(440, now); osc.frequency.setValueAtTime(554, now + 0.1); osc.frequency.setValueAtTime(659, now + 0.2); osc.frequency.setValueAtTime(880, now + 0.3);
-                gain.gain.setValueAtTime(0.3, now); gain.gain.linearRampToValueAtTime(0, now + 0.8);
-                osc.start(now); osc.stop(now + 0.8);
-            } else if (type === 'over') {
-                osc.type = 'square'; osc.frequency.setValueAtTime(200, now); osc.frequency.linearRampToValueAtTime(50, now + 0.5);
-                gain.gain.setValueAtTime(0.3, now); gain.gain.linearRampToValueAtTime(0, now + 0.5);
-                osc.start(now); osc.stop(now + 0.5);
-            } else if (type === 'fever') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(880, now); osc.frequency.linearRampToValueAtTime(1760, now + 0.3);
-                gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                osc.start(now); osc.stop(now + 0.3);
-            } else if (type === 'jump') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(300, now); osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
-                gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                osc.start(now); osc.stop(now + 0.1);
-            }
-        };
-
-        const createParticles = (x, y, color) => {
-            for(let i=0; i<8; i++) {
-                const p = document.createElement('div');
-                p.style.position = 'absolute'; p.style.left = `${x}%`; p.style.top = `${y}%`;
-                p.style.width = '10px'; p.style.height = '10px'; p.style.backgroundColor = color;
-                p.style.borderRadius = '50%'; p.style.pointerEvents = 'none'; p.style.zIndex = '101';
-                gameArea.appendChild(p);
-                const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 50 + 20;
-                const tx = Math.cos(angle) * dist; const ty = Math.sin(angle) * dist;
-                p.animate([
-                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                    { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
-                ], { duration: 600, easing: 'ease-out' }).onfinish = () => p.remove();
-            }
-        };
-        
-        // Initial setup for UI (Replacing the "Dessert 0 / 7" with Slots)
-        const gameScoreContainer = document.querySelector('.game-score');
-        if (gameScoreContainer) {
-            gameScoreContainer.innerHTML = `
-                <div style="font-size: 0.8rem; margin-bottom: 2px;">SCORE: <span id="game-score-val">0</span></div>
-                <div id="dessert-slots" style="display: flex; gap: 4px; font-size: 1.2rem;">
-                    ${dessertTypes.map(d => `<span class="slot" style="opacity:0.3; filter:grayscale(1); transition:all 0.3s;" data-type="${d}">❓</span>`).join('')}
-                </div>
-            `;
-            // Re-bind after innerHTML replacement
-        }
-        
-        const showScreen = (id) => {
-            screens.forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        };
-        
-        const updateUI = () => {
-            const scoreValEl = document.getElementById('game-score-val');
-            if(scoreValEl) scoreValEl.textContent = score;
-            livesVal.textContent = '❤️'.repeat(lives);
-
-            // Update slots
-            const slots = document.querySelectorAll('.slot');
-            slots.forEach(slot => {
-                if (collectedTypes.has(slot.dataset.type)) {
-                    slot.textContent = slot.dataset.type;
-                    slot.style.opacity = '1';
-                    slot.style.filter = 'none';
-                    slot.style.transform = 'scale(1.1)';
-                } else {
-                    slot.textContent = '❓';
-                    slot.style.opacity = '0.3';
-                    slot.style.filter = 'grayscale(1)';
-                    slot.style.transform = 'scale(1)';
-                }
-            });
-        };
-
-        const createFloatingText = (text, x, y, color = '#e6ff00') => {
-            const el = document.createElement('div');
-            el.textContent = text;
-            el.style.position = 'absolute';
-            el.style.left = `${x}%`;
-            el.style.top = `${y}%`;
-            el.style.color = color;
-            el.style.fontSize = '1.5rem';
-            el.style.fontWeight = 'bold';
-            el.style.fontFamily = 'var(--font-title)';
-            el.style.textShadow = '2px 2px 0 #000';
-            el.style.pointerEvents = 'none';
-            el.style.zIndex = '100';
-            el.style.transition = 'all 1s ease-out';
-            el.style.transform = 'translate(-50%, -50%)';
-            gameArea.appendChild(el);
-
-            requestAnimationFrame(() => {
-                el.style.top = `${y - 20}%`;
-                el.style.opacity = '0';
-                el.style.transform = 'translate(-50%, -50%) scale(1.5)';
-            });
-
-            setTimeout(() => { if(el.parentNode) el.remove(); }, 1000);
-        };
-        
-        const initGame = () => {
-            const selectedCharInput = document.querySelector('input[name="player-char"]:checked');
-            if (selectedCharInput) {
-                document.getElementById('player-img').src = selectedCharInput.value;
-            }
-
-            score = 0;
-            lives = 3;
-            collectedTypes.clear();
-            items.forEach(item => item.el.remove());
-            items = [];
-            playerX = 50;
-            playerY = 0;
-            playerVelocity = 0;
-            playerVelocityY = 0;
-            isJumping = false;
-            isFever = false;
-            clearTimeout(feverTimeout);
-            gameTime = 0;
-            player.style.left = `${playerX}%`;
-            player.style.bottom = `calc(${playerY}% + 20px)`;
-            player.style.filter = '';
-            player.style.transform = 'translateX(-50%)';
-            updateUI();
-        };
-        
-        const spawnItem = () => {
-            if (gameState !== 'play') return;
-            const rand = Math.random();
-            let typeValue, itemType;
-            
-            if (rand < 0.05) { // 5% fever star
-                typeValue = '⭐';
-                itemType = 'fever';
-            } else if (rand < 0.13) { // 8% chance for instant death item
-                typeValue = deathTypes[Math.floor(Math.random() * deathTypes.length)];
-                itemType = 'death';
-            } else if (rand < 0.45) { // 32% chance for cactus
-                typeValue = '🌵';
-                itemType = 'cactus';
-            } else { // 55% chance for dessert
-                typeValue = dessertTypes[Math.floor(Math.random() * dessertTypes.length)];
-                itemType = 'dessert';
-            }
-            
-            const itemEl = document.createElement('div');
-            itemEl.className = 'game-item item-' + itemType;
-            itemEl.innerHTML = typeValue;
-            itemEl.dataset.type = itemType;
-            itemEl.dataset.value = typeValue;
-            if (itemType === 'fever') {
-                itemEl.style.filter = 'drop-shadow(0 0 10px #ffea00)';
-                itemEl.style.animation = 'pulse 1s infinite alternate';
-            }
-            
-            const startX = Math.random() * 80 + 10;
-            itemEl.style.left = `${startX}%`;
-            itemEl.style.top = `-10%`;
-            
-            gameArea.appendChild(itemEl);
-            items.push({ 
-                el: itemEl, 
-                x: startX, 
-                baseX: startX,
-                y: -10, 
-                type: itemType, 
-                value: typeValue,
-                // Speed increases over time
-                speed: Math.random() * 0.4 + 0.8 + (gameTime * 0.0005),
-                swaySpeed: Math.random() * 0.05 + 0.02,
-                swayAmount: itemType === 'cactus' ? 0 : Math.random() * 6 + 2, // Only desserts sway
-                timeOffset: Math.random() * 100
-            });
-            
-            spawnRate = Math.max(400, 1200 - (gameTime * 15) - (score * 0.5));
-            spawnTimeout = setTimeout(spawnItem, spawnRate);
-        };
-        
-        const checkCollision = (item) => {
-            const playerRect = player.getBoundingClientRect();
-            const itemRect = item.el.getBoundingClientRect();
-            const paddingX = window.innerWidth < 768 ? 8 : 15;
-            const paddingY = window.innerWidth < 768 ? 8 : 10;
-            
-            return !(
-                playerRect.right - paddingX < itemRect.left + paddingX ||
-                playerRect.left + paddingX > itemRect.right - paddingX ||
-                playerRect.bottom - paddingY < itemRect.top + paddingY ||
-                playerRect.top + paddingY > itemRect.bottom - paddingY
-            );
-        };
-        
-        const updateGame = () => {
-            if (gameState !== 'play') return;
-            
-            gameTime++;
-
-            for (let i = items.length - 1; i >= 0; i--) {
-                const item = items[i];
-                item.timeOffset += item.swaySpeed;
-                
-                if (item.type === 'dessert') {
-                    item.x = item.baseX + Math.sin(item.timeOffset) * item.swayAmount;
-                }
-                
-                item.y += item.speed;
-                item.el.style.top = `${item.y}%`;
-                item.el.style.left = `${item.x}%`;
-                
-                if (checkCollision(item)) {
-                    if (item.type === 'fever') {
-                        playSound('fever');
-                        createParticles(playerX, 100 - playerY, '#ffea00');
-                        createFloatingText('FEVER!', playerX, 80 - playerY, '#ffea00');
-                        isFever = true;
-                        clearTimeout(feverTimeout);
-                        player.style.filter = 'drop-shadow(0 0 10px #ff00ff) hue-rotate(90deg)';
-                        feverTimeout = setTimeout(() => { isFever = false; player.style.filter = ''; }, 5000);
-                    } else if (item.type === 'cactus') {
-                        if (!isFever) {
-                            playSound('hit');
-                            lives--;
-                            updateUI();
-                            item.el.innerHTML = '💥';
-                            createFloatingText('-1 LIFE!', playerX, 80 - playerY, '#e60012');
-                            
-                            gameArea.animate([
-                                { transform: 'translate(4px, 4px)' }, { transform: 'translate(-4px, -4px)' },
-                                { transform: 'translate(-4px, 4px)' }, { transform: 'translate(0, 0)' }
-                            ], { duration: 300, iterations: 1 });
-
-                            player.style.filter = 'brightness(0) invert(1) sepia(100%) saturate(100%) hue-rotate(0deg)';
-                            setTimeout(() => { if(gameState==='play') player.style.filter = isFever ? 'drop-shadow(0 0 10px #ff00ff) hue-rotate(90deg)' : ''; }, 200);
-                            
-                            if (lives <= 0) {
-                                playSound('over');
-                                gameState = 'over';
-                                clearTimeout(spawnTimeout);
-                                setTimeout(() => showScreen('game-over-screen'), 500);
-                            }
-                        } else {
-                            playSound('catch');
-                            score += 100;
-                            createParticles(playerX, 100 - playerY, '#00ff00');
-                            createFloatingText('FEVER KICK!', playerX, 80 - playerY, '#ff00ff');
-                        }
-                    } else if (item.type === 'death') {
-                        if (!isFever) {
-                            playSound('hit');
-                            lives = 0;
-                            updateUI();
-                            item.el.innerHTML = '💥';
-                            createFloatingText('WASTED!', playerX, 80 - playerY, '#000');
-                            
-                            gameArea.animate([
-                                { transform: 'translate(6px, 6px)' }, { transform: 'translate(-6px, -6px)' },
-                                { transform: 'translate(-6px, 6px)' }, { transform: 'translate(0, 0)' }
-                            ], { duration: 500, iterations: 1 });
-
-                            player.style.filter = 'grayscale(1) brightness(0.5)';
-                            playSound('over');
-                            gameState = 'over';
-                            clearTimeout(spawnTimeout);
-                            setTimeout(() => showScreen('game-over-screen'), 800);
-                        } else {
-                            playSound('catch');
-                            score += 100;
-                            createParticles(playerX, 100 - playerY, '#ff00ff');
-                        }
-                    } else {
-                        playSound('catch');
-                        createParticles(playerX, 100 - playerY, '#ff99cc');
-                        if (!collectedTypes.has(item.value)) {
-                            collectedTypes.add(item.value);
-                            score += 500;
-                            createFloatingText('NEW +500!', playerX, 80 - playerY, '#46c700');
-                        } else {
-                            const pts = isFever ? 200 : 100;
-                            score += pts;
-                            createFloatingText(`+${pts}`, playerX, 80 - playerY, '#e6ff00');
-                        }
-                        updateUI();
-                        item.el.style.transform = 'translate(-50%, -50%) scale(2)';
-                        item.el.style.opacity = '0';
-                        
-                        if (collectedTypes.size >= 7) {
-                            playSound('clear');
-                            gameState = 'clear';
-                            clearTimeout(spawnTimeout);
-                            const flash = document.createElement('div');
-                            flash.style.position = 'absolute';
-                            flash.style.inset = '0';
-                            flash.style.background = '#fff';
-                            flash.style.zIndex = '999';
-                            flash.style.animation = 'flashFade 1s forwards';
-                            gameArea.appendChild(flash);
-                            setTimeout(() => showScreen('game-clear-screen'), 800);
-                        }
-                    }
-                    setTimeout(() => { if(item.el && item.el.parentNode) item.el.remove(); }, 200);
-                    items.splice(i, 1);
-                } else if (item.y > 110) {
-                    item.el.remove();
-                    items.splice(i, 1);
-                }
-            }
-            
-            // Velocity-based Player Movement
-            const moveSpeed = isFever ? 1.5 : 1;
-            const accel = (window.innerWidth < 768 ? 0.7 : 0.9) * moveSpeed;
-            if (isLeftPressed) playerVelocity -= accel;
-            if (isRightPressed) playerVelocity += accel;
-            
-            // Friction
-            playerVelocity *= 0.85;
-            playerX += playerVelocity;
-
-            // Boundaries
-            if (playerX < 5) {
-                playerX = 5;
-                playerVelocity = 0;
-            } else if (playerX > 95) {
-                playerX = 95;
-                playerVelocity = 0;
-            }
-
-            // Jump Physics
-            if (isJumpPressed && !isJumping) {
-                isJumping = true;
-                playerVelocityY = 15;
-                playSound('jump');
-            }
-            playerY += playerVelocityY;
-            playerVelocityY -= 1.2; // Gravity
-            if (playerY <= 0) {
-                playerY = 0;
-                playerVelocityY = 0;
-                isJumping = false;
-            }
-
-            // Tilt effect based on movement
-            const tilt = playerVelocity * 2;
-            player.style.transform = `translateX(-50%) rotate(${tilt}deg)`;
-            player.style.left = `${playerX}%`;
-            player.style.bottom = `calc(${playerY}% + 20px)`;
-            
-            if (gameState === 'play') {
-                gameLoop = requestAnimationFrame(updateGame);
-            }
-        };
-        
-        const startGame = () => {
-            gameState = 'play';
-            showScreen('game-play-screen');
-            initGame();
-            clearTimeout(spawnTimeout);
-            spawnTimeout = setTimeout(spawnItem, 500);
-            cancelAnimationFrame(gameLoop);
-            gameLoop = requestAnimationFrame(updateGame);
-        };
-        
-        gameStartBtn.addEventListener('click', startGame);
-        gameRetryBtn.addEventListener('click', startGame);
-        gameReplayBtn.addEventListener('click', startGame);
-        
-        let isLeftPressed = false;
-        let isRightPressed = false;
-        let isJumpPressed = false;
-        
-        window.addEventListener('keydown', (e) => {
-             if (e.key === 'ArrowLeft') { isLeftPressed = true; e.preventDefault(); }
-             if (e.key === 'ArrowRight') { isRightPressed = true; e.preventDefault(); }
-             if (e.key === 'ArrowUp' || e.key === ' ') { isJumpPressed = true; e.preventDefault(); }
-        });
-        window.addEventListener('keyup', (e) => {
-             if (e.key === 'ArrowLeft') isLeftPressed = false;
-             if (e.key === 'ArrowRight') isRightPressed = false;
-             if (e.key === 'ArrowUp' || e.key === ' ') isJumpPressed = false;
-        });
-        
-        const addHoldEvents = (btn, dirStr) => {
-            const press = (e) => { 
-                e.preventDefault(); 
-                if(dirStr === 'left') isLeftPressed=true; 
-                else if(dirStr === 'right') isRightPressed=true;
-                else if(dirStr === 'jump') isJumpPressed=true;
-            };
-            const release = (e) => { 
-                e.preventDefault(); 
-                if(dirStr === 'left') isLeftPressed=false; 
-                else if(dirStr === 'right') isRightPressed=false;
-                else if(dirStr === 'jump') isJumpPressed=false;
-            };
-            btn.addEventListener('mousedown', press);
-            btn.addEventListener('touchstart', press, {passive: false});
-            window.addEventListener('mouseup', release);
-            btn.addEventListener('mouseleave', release);
-            btn.addEventListener('touchend', release);
-        };
-        
-        if (btnLeft && btnRight) {
-            addHoldEvents(btnLeft, 'left');
-            addHoldEvents(btnRight, 'right');
-            if (btnJump) addHoldEvents(btnJump, 'jump');
-        }
-    }
 });
 
-// ─────────────────────────────────────────────
-// Parallax effect for hero background
-// ─────────────────────────────────────────────
+// Smooth scroll behavior
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero-bg');
-    if (hero) { hero.style.transform = `translateY(${scrolled * 0.4}px)`; }
+    if (window.pageYOffset > 100) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
 });
 
-// ─────────────────────────────────────────────
-// Ripple Effect for buttons
-// ─────────────────────────────────────────────
-document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('click', function (e) {
-        if (this.getAttribute('href') === '#') {
-            e.preventDefault();
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple-effect';
-            this.appendChild(ripple);
-            const rect = this.getBoundingClientRect();
-            ripple.style.left = (e.clientX - rect.left - 10) + 'px';
-            ripple.style.top = (e.clientY - rect.top - 10) + 'px';
-            setTimeout(() => ripple.remove(), 600);
+// Dynamic news feed
+const newsData = [
+    {
+        date: '2026.03.19',
+        tag: 'INFO',
+        title: 'キヨシ公式サイトをオープンしました！',
+        link: '#home'
+    }
+];
+
+function updateNewsFeed(data) {
+    const newsGrid = document.querySelector('.news-grid');
+    const newsSection = document.getElementById('news');
+    if (!newsGrid || !newsSection) return;
+
+    if (data.length === 0) {
+        newsSection.style.display = 'none';
+        return;
+    }
+
+    newsSection.style.display = 'block';
+    newsGrid.innerHTML = data.map(item => `
+        <div class="news-card">
+            <div class="news-header">
+                <span class="news-date">${item.date}</span>
+                <span class="news-tag">${item.tag}</span>
+            </div>
+            <p class="news-title"><a href="${item.link}">${item.title}</a></p>
+        </div>
+    `).join('');
+}
+
+// Dynamic Live Schedule
+const liveData = [
+    {
+        date: '2026.04.04',
+        day: 'SAT',
+        title: '『酔いどれ祭り2026』',
+        venue: '阪急庄内駅前東ストリート',
+        ticket: 'https://sabotenrock.com/live/'
+    },
+    {
+        date: '2026.04.20',
+        day: 'MON',
+        title: '「よしきときよしvol.1」',
+        venue: '京都 音まかす',
+        ticket: 'https://tiget.net/events/470983'
+    },
+    {
+        date: '2026.04.25',
+        day: 'SAT',
+        title: 'CAMP ROCK FRIENDS vol.6',
+        venue: '奈良 OIWAKE PARK',
+        ticket: 'https://crf.official.ec/'
+    }
+];
+
+function updateLiveSchedule(data) {
+    const liveGrid = document.querySelector('.live-grid');
+    if (!liveGrid) return;
+
+    liveGrid.innerHTML = data.map(item => `
+        <div class="live-card">
+            <div class="live-date-box">
+                <span class="live-date">${item.date}</span>
+                <span class="live-day">${item.day}</span>
+            </div>
+            <div class="live-info">
+                <h3 class="live-title">${item.title}</h3>
+                <p class="live-venue">${item.venue}</p>
+            </div>
+            <div class="live-status">
+                <a href="${item.ticket}" target="_blank" class="ticket-btn">TICKET</a>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Initialize News Feed
+document.addEventListener('DOMContentLoaded', () => {
+    updateNewsFeed(newsData);
+    updateLiveSchedule(liveData);
+});
+
+// Observe sections for scroll animations
+const observerOptions = {
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('appeared');
         }
     });
+}, observerOptions);
+
+document.querySelectorAll('.section').forEach(section => {
+    observer.observe(section);
 });
+
+// ============================================================
+//  🌵 SABOTEN JUMP v2 - Mobile-First Enhanced
+// ============================================================
+(function () {
+    const canvas = document.getElementById('game-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const W = 1000;
+    const H = 310;       // taller canvas
+    canvas.width  = W;
+    canvas.height = H;
+
+    const GROUND_Y  = H - 55;
+    const GRAVITY   = 0.9;
+    const JUMP_V    = -18;
+    const INIT_SPD  = 7;   // faster start
+
+    const C = {
+        bg: '#fdfaf6', ground: '#2c3e38', green: '#3eb46b',
+        dark: '#2a7a4a', pop: '#ff6b6b', yellow: '#ffd166', white: '#fff',
+        muted: 'rgba(44,62,56,0.18)',
+    };
+    const EMOJI_ENEMIES = ['💩', '🚽', '🐍', '🪴', '🎸', '🐦‍⬛'];
+
+    let state = 'idle';
+    let score = 0;
+    let hiScore = parseInt(localStorage.getItem('sabotenJumpHi') || '0');
+    let speed, frameCount, nextIn, obstacles, groundOff, cloudOff;
+    let animTimer = 0, legFrame = 0;
+    let particles = [], dustParts = [];
+    let screenShake = 0;
+    let lastTs = 0;
+
+    const P = { x: 90, y: 0, w: 46, h: 62, vy: 0, onGround: true, sq: 1, st: 1 };
+
+    function reset() {
+        score = 0; speed = INIT_SPD; frameCount = 0; nextIn = 75;
+        obstacles = []; particles = []; dustParts = [];
+        groundOff = cloudOff = animTimer = legFrame = screenShake = 0;
+        P.y = GROUND_Y - P.h; P.vy = 0; P.onGround = true; P.sq = P.st = 1;
+    }
+
+    function jump() {
+        if (state === 'idle' || state === 'dead') { state = 'running'; reset(); return; }
+        if (state === 'running' && P.onGround) {
+            P.vy = JUMP_V; P.onGround = false; P.sq = 0.6; P.st = 1.5;
+            spawnDust();
+        }
+    }
+
+    // ── Input ──────────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+        if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); jump(); }
+    });
+    canvas.addEventListener('click', jump);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); jump(); }, { passive: false });
+
+    // Mobile jump button
+    const jumpBtn = document.getElementById('jump-btn');
+    if (jumpBtn) {
+        jumpBtn.addEventListener('touchstart', e => { e.preventDefault(); jump(); }, { passive: false });
+        jumpBtn.addEventListener('click', e => { e.preventDefault(); jump(); });
+    }
+
+    // ── Particles ──────────────────────────────────────────
+    function spawnDust() {
+        for (let i = 0; i < 5; i++) {
+            dustParts.push({ x: P.x + Math.random() * P.w, y: GROUND_Y,
+                vx: (Math.random() - 0.5) * 2, vy: -Math.random() * 2,
+                r: Math.random() * 5 + 2, life: 1 });
+        }
+    }
+    function spawnDeath() {
+        const cs = [C.green, C.yellow, C.pop, C.dark, C.white];
+        for (let i = 0; i < 22; i++) {
+            const a = Math.random() * Math.PI * 2, spd = Math.random() * 7 + 2;
+            particles.push({ x: P.x + P.w / 2, y: P.y + P.h / 2,
+                vx: Math.cos(a) * spd, vy: Math.sin(a) * spd - 3,
+                r: Math.random() * 6 + 3, color: cs[Math.floor(Math.random() * cs.length)], life: 1 });
+        }
+    }
+
+    // ── Draw helpers ───────────────────────────────────────
+    function drawBg() {
+        let topC = '#fdfaf6', botC = '#f0f7f4'; // 昼
+        if (score > 1200) { topC = '#0a0a20'; botC = '#1c1c3c'; } // 深夜
+        else if (score > 800) { topC = '#1b2755'; botC = '#80344d'; } // 夜
+        else if (score > 400) { topC = '#ff7b54'; botC = '#ffd56b'; } // 夕方
+
+        const g = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+        g.addColorStop(0, topC); g.addColorStop(1, botC);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    }
+
+    function drawClouds() {
+        ctx.fillStyle = (score > 800) ? 'rgba(255,255,255,0.06)' : 'rgba(62,180,107,0.09)';
+        [[100,30,28],[300,50,20],[530,22,34],[720,40,22],[920,25,30]].forEach(([bx,by,r]) => {
+            const x = ((bx - cloudOff * 0.3) % W + W) % W;
+            ctx.beginPath();
+            ctx.arc(x, by, r, 0, Math.PI*2); ctx.arc(x+r*.8, by-r*.35, r*.72, 0, Math.PI*2);
+            ctx.arc(x-r*.65, by-r*.2, r*.62, 0, Math.PI*2); ctx.arc(x+r*1.5, by-r*.1, r*.5, 0, Math.PI*2);
+            ctx.fill();
+        });
+    }
+
+    function drawGround() {
+        ctx.fillStyle = '#e8f2ec'; ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+        ctx.strokeStyle = C.ground; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(0, GROUND_Y); ctx.lineTo(W, GROUND_Y); ctx.stroke();
+        ctx.fillStyle = 'rgba(44,62,56,0.32)';
+        for (let i = 0; i < 22; i++) {
+            const x = ((i * 55 - groundOff % 55) + W + W) % W;
+            ctx.fillRect(x, GROUND_Y + 8, 28, 3);
+        }
+        ctx.fillStyle = C.muted; ctx.font = '15px serif';
+        for (let i = 0; i < 12; i++) {
+            const x = ((i * 80 - groundOff % 80 * .65) + W + W) % W;
+            ctx.fillText('♪', x, GROUND_Y + 28);
+        }
+    }
+
+    function drawPlayer(dead) {
+        const { w, sq, st } = P;
+        const cx = P.x + w / 2;
+        ctx.save();
+        ctx.translate(cx, P.y + P.h / 2);
+        ctx.scale(sq, st);
+        ctx.translate(-w / 2, -P.h / 2);
+
+        ctx.fillStyle = C.green;
+        ctx.fillRect(-8, 18, 15, 9); ctx.fillRect(-8, 10, 9, 13);
+        ctx.fillRect(w-7, 22, 15, 9); ctx.fillRect(w-1, 14, 9, 13);
+        ctx.fillRect(9, 16, w-18, 38);
+        ctx.beginPath(); ctx.arc(w/2, 15, 15, 0, Math.PI*2); ctx.fill();
+
+        ctx.fillStyle = C.dark;
+        ctx.fillRect(w/2-2, -4, 4, 10); ctx.fillRect(4, 2, 4, 8); ctx.fillRect(w-8, 4, 4, 8);
+
+        if (dead) {
+            ctx.strokeStyle = C.ground; ctx.lineWidth = 3;
+            [[-11,7,-4,14],[-4,7,-11,14],[3,7,10,14],[10,7,3,14]].forEach(([x1,y1,x2,y2]) => {
+                ctx.beginPath(); ctx.moveTo(w/2+x1,y1); ctx.lineTo(w/2+x2,y2); ctx.stroke();
+            });
+            ctx.beginPath(); ctx.arc(w/2, 25, 5, Math.PI+.4, Math.PI*2-.4); ctx.stroke();
+        } else {
+            ctx.fillStyle = 'rgba(25,35,45,0.92)';
+            ctx.fillRect(w/2-12, 8, 11, 7); ctx.fillRect(w/2+1, 8, 11, 7); ctx.fillRect(w/2-1, 9, 2, 5);
+            ctx.strokeStyle = C.ground; ctx.lineWidth = 1;
+            ctx.strokeRect(w/2-12, 8, 11, 7); ctx.strokeRect(w/2+1, 8, 11, 7);
+            ctx.strokeStyle = C.ground; ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.arc(w/2, 24, 5, .2, Math.PI-.2); ctx.stroke();
+        }
+
+        ctx.fillStyle = C.dark;
+        if (P.onGround) {
+            ctx.fillRect(10, 51, 12, legFrame===0?18:10); ctx.fillRect(24, 51, 12, legFrame===0?10:18);
+        } else {
+            ctx.fillRect(10, 51, 12, 10); ctx.fillRect(24, 51, 12, 10);
+        }
+        ctx.restore();
+    }
+
+    function drawObstacle(o) {
+        const cx = o.x + o.w / 2;
+        if (o.type === 'amp') {
+            const g = ctx.createLinearGradient(o.x,o.y,o.x+o.w,o.y+o.h);
+            g.addColorStop(0,'#3a5048'); g.addColorStop(1,'#2c3e38');
+            ctx.fillStyle = g; ctx.fillRect(o.x, o.y, o.w, o.h);
+            ctx.strokeStyle = C.green; ctx.lineWidth = 2;
+            ctx.strokeRect(o.x+4, o.y+4, o.w-8, o.h-8);
+            ctx.fillStyle = C.dark;
+            ctx.beginPath(); ctx.arc(cx, o.y+o.h*.42, o.h*.25, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = C.green;
+            ctx.beginPath(); ctx.arc(cx, o.y+o.h*.42, o.h*.14, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = C.yellow; ctx.fillRect(o.x+7, o.y+o.h-17, o.w-14, 8);
+        } else if (o.type === 'guitar') {
+            ctx.fillStyle = C.pop;
+            ctx.fillRect(cx-5, o.y, 10, o.h);
+            ctx.beginPath(); ctx.arc(cx, o.y+o.h-20, 18, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#bb3333'; ctx.fillRect(o.x+2, o.y, o.w-4, 7);
+            ctx.strokeStyle = 'rgba(255,255,255,.4)'; ctx.lineWidth = 1;
+            for (let i=-2; i<=2; i++) { ctx.beginPath(); ctx.moveTo(cx+i*2.2,o.y+7); ctx.lineTo(cx+i*2.2,o.y+o.h-20); ctx.stroke(); }
+        } else if (o.type === 'emoji') {
+            // No border
+            ctx.font = o.h + 'px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText(o.emoji, cx, o.y);
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'alphabetic';
+            return; // Skip standard border
+        } else {
+            ctx.fillStyle = C.green;
+            ctx.fillRect(o.x+9, o.y+10, o.w-18, o.h-10);
+            ctx.beginPath(); ctx.arc(cx, o.y+10, (o.w-18)/2, 0, Math.PI*2); ctx.fill();
+            if (o.h > 56) {
+                ctx.fillRect(o.x-4,o.y+20,14,10); ctx.fillRect(o.x-4,o.y+11,9,14);
+                ctx.fillRect(o.x+o.w-10,o.y+24,14,10); ctx.fillRect(o.x+o.w-5,o.y+15,9,14);
+            }
+            ctx.fillStyle = C.dark; ctx.fillRect(cx-2, o.y-5, 4, 10);
+            if (o.h > 56) { ctx.fillRect(o.x+8,o.y+4,4,8); ctx.fillRect(o.x+o.w-12,o.y+6,4,8); }
+        }
+        ctx.strokeStyle = C.ground; ctx.lineWidth = 2;
+        ctx.strokeRect(o.x, o.y, o.w, o.h);
+    }
+
+    function drawSpeedBar() {
+        const level = Math.min(Math.floor(score / 200) + 1, 10);
+        const filled = (level - 1) / 9;
+        const bw = 140, bx = W - bw - 14, by = 14;
+        ctx.fillStyle = 'rgba(44,62,56,0.12)'; ctx.fillRect(bx, by, bw, 10);
+        const g = ctx.createLinearGradient(bx, 0, bx+bw, 0);
+        g.addColorStop(0, '#3eb46b'); g.addColorStop(.7, '#ffd166'); g.addColorStop(1, '#ff6b6b');
+        ctx.fillStyle = g; ctx.fillRect(bx, by, bw * filled, 10);
+        ctx.strokeStyle = C.ground; ctx.lineWidth = 1.5; ctx.strokeRect(bx, by, bw, 10);
+        ctx.fillStyle = C.ground; ctx.font = '10px "Yusei Magic", sans-serif';
+        ctx.textAlign = 'right'; ctx.fillText(`SPEED Lv${level}`, W-14, by-1); ctx.textAlign = 'left';
+    }
+
+    function drawIdleScreen() {
+        ctx.fillStyle = 'rgba(253,250,246,.9)'; ctx.fillRect(0,0,W,H);
+        drawPlayer(false);
+        ctx.fillStyle = C.ground; ctx.font = 'bold 32px "RocknRoll One",sans-serif';
+        ctx.textAlign = 'center'; ctx.fillText('🌵 サボテンジャンプ', W/2, H/2-28);
+        ctx.fillStyle = C.dark; ctx.font = '18px "Yusei Magic",sans-serif';
+        ctx.fillText('クリック／タップ／スペースでスタート！', W/2, H/2+10);
+        if (hiScore > 0) {
+            ctx.fillStyle = C.pop; ctx.font = 'bold 15px "RocknRoll One",sans-serif';
+            ctx.fillText(`🏆 BEST: ${hiScore}`, W/2, H/2+42);
+        }
+        ctx.textAlign = 'left';
+    }
+
+    function drawDeadScreen() {
+        ctx.fillStyle = 'rgba(253,250,246,.88)';
+        const bx=W/2-190, by=H/2-65; ctx.fillRect(bx,by,380,132);
+        ctx.strokeStyle=C.ground; ctx.lineWidth=3; ctx.strokeRect(bx,by,380,132);
+        ctx.fillStyle=C.pop; ctx.font='bold 30px "RocknRoll One",sans-serif';
+        ctx.textAlign='center'; ctx.fillText('💥 GAME OVER!', W/2, H/2-22);
+        const s=Math.floor(score), isNew=(s>=hiScore&&s>0);
+        ctx.fillStyle=isNew?C.pop:C.ground;
+        ctx.font=isNew?'bold 19px "RocknRoll One",sans-serif':'17px "Yusei Magic",sans-serif';
+        ctx.fillText(isNew?`🎉 NEW RECORD: ${s}!`:`スコア: ${s}　ベスト: ${hiScore}`, W/2, H/2+12);
+        ctx.fillStyle=C.dark; ctx.font='15px "Yusei Magic",sans-serif';
+        ctx.fillText('クリック／タップ／スペースでリトライ！', W/2, H/2+45);
+        ctx.textAlign='left';
+    }
+
+    // ── Game logic ─────────────────────────────────────────
+    function spawn() {
+        const r = Math.random();
+        let type, h, w, emoji = null;
+        if (r < .35)      { type='cactus'; h=Math.random()<.45?56:78; w=40; }
+        else if (r < .55) { type='amp';    h=62; w=58; }
+        else if (r < .70) { type='guitar'; h=78; w=38; }
+        else              { type='emoji';  h=45; w=45; emoji = EMOJI_ENEMIES[Math.floor(Math.random()*EMOJI_ENEMIES.length)]; }
+        obstacles.push({ x: W+20, y: GROUND_Y-h, w, h, type, emoji });
+    }
+
+    function hitTest() {
+        const m = 10;
+        for (const o of obstacles) {
+            if (P.x+m < o.x+o.w-m && P.x+P.w-m > o.x+m &&
+                P.y+m < o.y+o.h-m && P.y+P.h-m > o.y+m) return true;
+        }
+        return false;
+    }
+
+    function update(dt) {
+        // Always decay screen shake and update particles (even on game over / idle)
+        if (screenShake > 0) screenShake = Math.max(0, screenShake - 0.6 * dt);
+
+        dustParts.forEach(p => { p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=0.2*dt; p.life-=0.07*dt; });
+        dustParts = dustParts.filter(p => p.life > 0);
+        particles.forEach(p => { p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=0.3*dt; p.life-=0.035*dt; });
+        particles = particles.filter(p => p.life > 0);
+
+        if (state !== 'running') { animTimer+=dt; if(animTimer>=15){legFrame^=1;animTimer=0;} return; }
+
+        score += 0.15 * dt;
+        speed = INIT_SPD + (score / 120) * 1.5; // Difficulty ramps up faster
+        const animRate = Math.max(3, 9 - speed / 2);
+        animTimer += dt; if (animTimer >= animRate) { legFrame^=1; animTimer=0; }
+
+        P.sq += (1-P.sq)*0.25*dt; P.st += (1-P.st)*0.25*dt;
+
+        P.vy += GRAVITY * dt;
+        P.y  += P.vy    * dt;
+        if (P.y >= GROUND_Y - P.h) {
+            const wasJumping = !P.onGround;
+            P.y = GROUND_Y - P.h; P.vy = 0; P.onGround = true;
+            if (wasJumping) { P.sq = 0.72; P.st = 1.28; spawnDust(); }
+        }
+
+        groundOff += speed * dt; cloudOff += 0.4 * dt;
+
+        frameCount += dt;
+        if (frameCount >= nextIn) {
+            spawn();
+            nextIn = Math.floor(Math.random()*38)+62 - Math.min(Math.floor(score/250)*7, 28);
+            frameCount = 0;
+        }
+
+        obstacles.forEach(o => o.x -= speed * dt);
+        obstacles = obstacles.filter(o => o.x > -120);
+
+        if (hitTest()) {
+            state = 'dead'; screenShake = 10; spawnDeath();
+            const s = Math.floor(score);
+            if (s > hiScore) { hiScore = s; localStorage.setItem('sabotenJumpHi', hiScore); }
+        }
+    }
+
+    function draw() {
+        ctx.save();
+        if (screenShake > 0) ctx.translate((Math.random()-.5)*screenShake*2, (Math.random()-.5)*screenShake*2);
+        drawBg(); drawClouds(); drawGround();
+        dustParts.forEach(p => { ctx.globalAlpha=p.life; ctx.fillStyle=C.dark; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); });
+        ctx.globalAlpha = 1;
+        if (state !== 'idle') obstacles.forEach(o => drawObstacle(o));
+        drawPlayer(state === 'dead');
+        particles.forEach(p => { ctx.globalAlpha=p.life; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); });
+        ctx.globalAlpha = 1;
+        if (state === 'running') drawSpeedBar();
+        ctx.restore();
+
+        document.getElementById('game-score').textContent = Math.floor(score);
+        document.getElementById('game-hiscore').textContent = hiScore;
+        if (state === 'idle') drawIdleScreen();
+        if (state === 'dead') drawDeadScreen();
+    }
+
+    function loop(ts) {
+        const dt = Math.min((ts - lastTs) / 16.67, 3); // delta time (1.0 = 60fps)
+        lastTs = ts;
+        update(dt); draw();
+        requestAnimationFrame(loop);
+    }
+
+    document.getElementById('game-hiscore').textContent = hiScore;
+    reset();
+    requestAnimationFrame(loop);
+})();
+
+
