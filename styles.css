@@ -901,10 +901,13 @@ body {
     /* Sections */
     .section { padding: 4rem 1rem 3rem; scroll-margin-top: 60px; }
 
-    /* Prevent any section overflow */
-    .section, .container, .graffiti-box, .hero {
+    /* Prevent handling wrap breakage */
+    .container, .graffiti-box, .hero {
         max-width: 100%;
         overflow: hidden;
+    }
+    .section {
+        max-width: 100%;
     }
 
     /* Canvas: prevent horizontal overflow */
@@ -940,7 +943,7 @@ body {
 /* セクションにはposition:relativeが必要 */
 .deco-section {
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; /* イラストの端がクリッピングされないように削除 */
 }
 
 /* 全デコ共通 */
@@ -964,13 +967,14 @@ body {
 .deco-l1 { width: 120px; top: 5%; left: 2%; transform: rotate(-10deg); }
 .deco-l2 {
     width: 140px;
-    bottom: -15%; /* カードとカードの間に見えるように調整（座布団キャラ等） */
-    right: 5%;
+    bottom: -50px; /* 最下部の余白へ完全に逃し、カードとの被りを100%防止 */
+    left: 50%;
+    margin-left: -70px; /* 画面のド真ん中（何も要素がない安全地帯）に配置 */
     transform: rotate(5deg);
 }
 
 /* ── PROFILE ── */
-.deco-p1 { width: 130px; top: 5%; right: 2%; transform: rotate(12deg); }
+.deco-p1 { width: 130px; top: 5%; right: 2%; transform: rotate(12deg); } /* BOXと被らず、他の要素からも遠い元もと綺麗な位置 */
 
 /* ── SABOTEN/STUDIO ── */
 .deco-s1 { width: 130px; top: -15%; left: 5%; transform: rotate(-8deg); }
@@ -980,17 +984,19 @@ body {
 
 /* モバイル: コンテンツが中央を占めるため、重なりを避けるためにさらに端へ、または上下へ */
 @media (max-width: 768px) {
-    .deco-h1  { width: 90px; left: 0; bottom: 0; opacity: 0.6; }
-    .deco-h2  { width: 70px; right: 0; top: 5%; opacity: 0.5; }
-    .deco-n1  { width: 70px; right: 0; top: 10%; opacity: 0.5; }
-    .deco-l1  { width: 80px; left: -5%; top: -5%; opacity: 0.5; }
-    .deco-l2  { width: 100px; right: -5%; bottom: -10%; opacity: 0.7; } /* 座布団キャラをあえて端へ */
-    .deco-p1  { width: 90px; right: 0; top: 0%; opacity: 0.6; }
-    .deco-s1  { width: 85px; left: -2%; top: -8%; opacity: 0.6; }
-    .deco-g1  { width: 80px; right: 0; top: -5%; opacity: 0.6; }
-}
-
-/* 極小スクリーンでは非表示 */
-@media (max-width: 420px) {
-    .deco-fixed { display: none; }
+    .deco-h1  { width: 80px; left: 2%; bottom: 2%; opacity: 0.9; }
+    .deco-h2  { width: 70px; right: 2%; top: 5%; opacity: 0.9; }
+    .deco-n1  { width: 70px; right: 2%; top: 5%; opacity: 0.9; }
+    .deco-l1  { width: 80px; left: 2%; top: 2%; opacity: 0.9; }
+    .deco-l2  { 
+        width: 90px; 
+        left: 50%; 
+        right: auto;
+        margin-left: -45px; 
+        bottom: -35px; 
+        opacity: 0.9; 
+    } /* 中央配置を引き継ぎつつモバイル用に縮小 */
+    .deco-p1  { width: 80px; right: 2%; top: 2%; opacity: 0.9; }
+    .deco-s1  { width: 80px; left: 2%; top: -5%; opacity: 0.9; }
+    .deco-g1  { width: 80px; right: 2%; top: 2%; opacity: 0.9; }
 }
