@@ -499,14 +499,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const now = new Date().getTime();
     const daysPassed = Math.floor((now - baseDate) / (1000 * 60 * 60 * 24));
     
+    // Increment on every single page load for immediate feedback!
     let localHits = parseInt(localStorage.getItem('kiyoshi_local_hits') || '0');
-    
-    // Only increment once per session by checking sessionStorage
-    if (!sessionStorage.getItem('kiyoshi_session_counted')) {
-        localHits++;
-        localStorage.setItem('kiyoshi_local_hits', localHits);
-        sessionStorage.setItem('kiyoshi_session_counted', 'true');
-    }
+    localHits++;
+    localStorage.setItem('kiyoshi_local_hits', localHits.toString());
     
     const totalVisits = (daysPassed * 27) + localHits + 12850; 
     const visitStr = totalVisits.toString().padStart(6, '0');
