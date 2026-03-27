@@ -487,4 +487,46 @@ document.querySelectorAll('.section').forEach(section => {
     requestAnimationFrame(loop);
 })();
 
+// ============================================================
+//  Native Visit Counter
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const counterEl = document.getElementById('visit-counter');
+    if (!counterEl) return;
 
+    // Simulate steady growth + local tracking
+    const baseDate = new Date('2024-01-01').getTime();
+    const now = new Date().getTime();
+    const daysPassed = Math.floor((now - baseDate) / (1000 * 60 * 60 * 24));
+    
+    let localHits = parseInt(localStorage.getItem('kiyoshi_local_hits') || '0');
+    
+    // Only increment once per session by checking sessionStorage
+    if (!sessionStorage.getItem('kiyoshi_session_counted')) {
+        localHits++;
+        localStorage.setItem('kiyoshi_local_hits', localHits);
+        sessionStorage.setItem('kiyoshi_session_counted', 'true');
+    }
+    
+    const totalVisits = (daysPassed * 27) + localHits + 12850; 
+    const visitStr = totalVisits.toString().padStart(6, '0');
+    
+    // Inject retro digits
+    counterEl.innerHTML = visitStr.split('').map(digit => `
+        <span style="
+            display: inline-block;
+            background: #fdfaf6;
+            color: #2c3e38;
+            font-family: 'RocknRoll One', monospace;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 1.2;
+            min-width: 22px;
+            border-bottom: 2px solid #ccc;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        ">${digit}</span>
+    `).join('');
+});

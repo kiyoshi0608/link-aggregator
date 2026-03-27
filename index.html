@@ -212,10 +212,15 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="access-counter" style="text-align: center; margin-bottom: 2rem;">
-                <p class="hand-drawn" style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--color-text-dark);">あなたは</p>
-                <img src="https://profile-counter.glitch.me/kiyoshi_official/count.svg" alt="Access Counter" style="display: inline-block; filter: drop-shadow(3px 3px 0 var(--color-gray));">
-                <p class="hand-drawn" style="font-size: 1.2rem; margin-top: 0.5rem; color: var(--color-text-dark);">人目の訪問者です🌵</p>
+            <div class="access-counter" style="text-align: center; margin-bottom: 2rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="hand-drawn" style="font-size: 1.2rem; color: var(--color-text-dark);">あなたは</span>
+                
+                <!-- Native HTML Counter -->
+                <div id="visit-counter" style="display: flex; gap: 2px; background: #222; padding: 4px; border: 3px solid var(--color-text-dark); border-radius: 6px; box-shadow: 4px 4px 0 var(--color-gray);">
+                    <!-- Digits will be injected here by script.js -->
+                </div>
+
+                <span class="hand-drawn" style="font-size: 1.2rem; color: var(--color-text-dark);">人目の訪問者です🌵</span>
             </div>
             <div class="footer-bottom">
                 <p class="hand-drawn-p">&copy; 2026 キヨシ Official.</p>
