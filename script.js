@@ -95,6 +95,20 @@ const liveData = [
         title: 'CAMP ROCK FRIENDS vol.6',
         venue: '奈良 OIWAKE PARK',
         ticket: 'https://crf.official.ec/'
+    },
+    {
+        date: '2026.05.09',
+        day: 'SAT',
+        title: '弾き語りイベント',
+        venue: '関西某所',
+        ticket: '#'
+    },
+    {
+        date: '2026.05.21',
+        day: 'THU',
+        title: '弾き語りイベント',
+        venue: '関西某所',
+        ticket: '#'
     }
 ];
 
@@ -113,7 +127,7 @@ function updateLiveSchedule(data) {
                 <p class="live-venue">${item.venue}</p>
             </div>
             <div class="live-status">
-                <a href="${item.ticket}" target="_blank" class="ticket-btn">TICKET</a>
+                ${item.ticket && item.ticket !== '#' ? `<a href="${item.ticket}" target="_blank" class="ticket-btn">TICKET</a>` : ''}
             </div>
         </div>
     `).join('');
