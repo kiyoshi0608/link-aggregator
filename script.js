@@ -44,6 +44,12 @@ window.addEventListener('scroll', () => {
 // Dynamic news feed
 const newsData = [
     {
+        date: '2026.04.02',
+        tag: 'LIVE',
+        title: '5/9(土) 神戸公演の詳細解禁！4/4(土)19:00より予約受付開始！',
+        link: '#live'
+    },
+    {
         date: '2026.03.19',
         tag: 'INFO',
         title: 'キヨシ公式サイトをオープンしました！',
@@ -99,8 +105,11 @@ const liveData = [
     {
         date: '2026.05.09',
         day: 'SAT',
-        title: '弾き語りイベント',
-        venue: '関西某所',
+        title: 'みみみ食堂の美味しん坊！万才 『Master Garden』',
+        venue: '神戸 スペースドッグ！2nd',
+        performer: '出演: みみみ食堂 / キヨシ(SABOTEN)',
+        info: 'OPEN 14:30 / START 15:00<br>¥2500 (+1D別) / 定員: 20名<br>YouTubeにて無料配信あり',
+        note: '4/4(土) 19:00~ 予約受付開始🍚🔥',
         ticket: '#'
     },
     {
@@ -125,6 +134,9 @@ function updateLiveSchedule(data) {
             <div class="live-info">
                 <h3 class="live-title">${item.title}</h3>
                 <p class="live-venue">${item.venue}</p>
+                ${item.performer ? `<p class="live-performer" style="font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">${item.performer}</p>` : ''}
+                ${item.info ? `<p class="live-details" style="font-size: 0.85rem; margin-top: 0.3rem; opacity: 0.8;">${item.info}</p>` : ''}
+                ${item.note ? `<p class="live-note" style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--color-pop); font-weight: bold;">${item.note}</p>` : ''}
             </div>
             <div class="live-status">
                 ${item.ticket && item.ticket !== '#' ? `<a href="${item.ticket}" target="_blank" class="ticket-btn">TICKET</a>` : ''}
