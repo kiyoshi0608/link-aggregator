@@ -44,12 +44,6 @@ window.addEventListener('scroll', () => {
 // Dynamic news feed
 const newsData = [
     {
-        date: '2026.04.02',
-        tag: 'LIVE',
-        title: '5/9(土) 神戸公演 予約受付中！',
-        link: '#live'
-    },
-    {
         date: '2026.03.19',
         tag: 'INFO',
         title: 'キヨシ公式サイトをオープンしました！',
