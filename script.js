@@ -46,7 +46,7 @@ const newsData = [
     {
         date: '2026.04.02',
         tag: 'LIVE',
-        title: '5/9(土) 神戸公演の詳細解禁！4/4(土)19:00より予約受付開始！',
+        title: '5/9(土) 神戸公演 予約受付中！',
         link: '#live'
     },
     {
@@ -109,8 +109,8 @@ const liveData = [
         venue: '神戸 スペースドッグ！2nd',
         performer: '出演: みみみ食堂 / キヨシ(SABOTEN)',
         info: 'OPEN 14:30 / START 15:00<br>¥2500 (+1D別) / 定員: 20名<br>YouTubeにて無料配信あり',
-        note: '4/4(土) 19:00~ 予約受付開始🍚🔥',
-        ticket: '#'
+        note: '現在予約受付中！🍚🔥',
+        ticket: 'https://sabotenrock.com/live/%e3%81%bf%e3%81%bf%e3%81%bf%e9%a3%9f%e5%a0%82%e3%81%ae%e7%be%8e%e5%91%b3%e3%81%97%e3%82%93%e5%9d%8a%ef%bc%81%e4%b8%87%e6%89%8d-%e3%80%8emaster-garden%e3%80%8f/'
     },
     {
         date: '2026.05.21',
