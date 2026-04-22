@@ -76,20 +76,6 @@ function updateNewsFeed(data) {
 // Dynamic Live Schedule
 const liveData = [
     {
-        date: '2026.04.04',
-        day: 'SAT',
-        title: '『酔いどれ祭り2026』',
-        venue: '阪急庄内駅前東ストリート',
-        ticket: 'https://sabotenrock.com/live/'
-    },
-    {
-        date: '2026.04.20',
-        day: 'MON',
-        title: '「よしきときよしvol.1」',
-        venue: '京都 音まかす',
-        ticket: 'https://tiget.net/events/470983'
-    },
-    {
         date: '2026.04.25',
         day: 'SAT',
         title: 'CAMP ROCK FRIENDS vol.6',
