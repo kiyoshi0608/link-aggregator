@@ -114,7 +114,7 @@ const liveData = [
         performer: '出演: w-shun (KNOCK OUT MONKEY) / キヨシ(SABOTEN) / ITO→たのし / Mr.Lawrence（ハイグレードピーマンズ） / 大森健太 / 山本アキラ',
         info: 'Open 18:00 / Start 18:30<br>Ticket ¥3,000 (+1Drink ¥600)',
         note: '※チケット代から500円が募金になります',
-        ticket: '#'
+        ticket: 'https://sabotenrock.com/live/%e5%b1%b1%e6%9c%ac%e3%82%a2%e3%82%ad%e3%83%a9x%e5%a4%aa%e9%99%bd%e3%81%a8%e8%99%8e-%e3%80%8c%e4%bb%96%e3%81%8c%e7%82%ba%e3%83%8f%e8%87%aa%e3%81%8c%e7%82%ba%e3%80%8d-%e5%a4%aa%e9%99%bd%e3%81%a8/'
     }
 ];
 
