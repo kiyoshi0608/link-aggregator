@@ -109,8 +109,11 @@ const liveData = [
     {
         date: '2026.05.21',
         day: 'THU',
-        title: '弾き語りイベント',
-        venue: '関西某所',
+        title: '山本アキラ×太陽と虎<br>「他が為ハ自が為」-太陽と虎編-',
+        venue: 'music zoo KOBE 太陽と虎',
+        performer: '出演: w-shun (KNOCK OUT MONKEY) / キヨシ(SABOTEN) / ITO→たのし / Mr.Lawrence（ハイグレードピーマンズ） / 大森健太 / 山本アキラ',
+        info: 'Open 18:00 / Start 18:30<br>Ticket ¥3,000 (+1Drink ¥600)',
+        note: '※チケット代から500円が募金になります',
         ticket: '#'
     }
 ];
