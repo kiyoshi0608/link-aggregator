@@ -231,22 +231,22 @@ body {
 }
 
 .hero-logo-img {
-    width: 480px; 
+    width: 380px; 
     height: auto;
     filter: drop-shadow(5px 5px 0 var(--color-yellow));
     animation: wobbleIn 0.8s ease-out forwards;
-    margin-bottom: -1.2rem; /* さらに削ってsubtitleを極限まで近づける */
+    margin-bottom: -3.5rem; /* 極限までロゴに近づける */
 }
 
 .hero-subtitle {
     font-family: var(--font-accent);
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: #fff;
     background: var(--color-text-dark);
     display: inline-block;
     padding: 0.6rem 2rem;
     transform: rotate(-2deg);
-    margin: 0.2rem 0 2rem; /* 余計なマージンを排除 */
+    margin: 0.2rem 0 1.8rem; /* 下の要素（LINEボタン）との距離を広げる */
     box-shadow: 6px 6px 0 var(--color-yellow);
     border-radius: 4px;
     letter-spacing: 0.1em;
@@ -675,14 +675,68 @@ body {
     background: var(--color-yellow);
 }
 
-/* Individual icon colors on hover */
-.social-icon-link:nth-child(1):hover { background: #000; color: #fff; box-shadow: 6px 6px 0 #333; }
-.social-icon-link:nth-child(2):hover { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
-.social-icon-link:nth-child(3):hover { background: #ff0000; color: #fff; box-shadow: 6px 6px 0 #cc0000; }
-.social-icon-link:nth-child(4):hover { background: #010101; color: #fff; box-shadow: 6px 6px 0 #ff0050; } /* TikTok */
-.social-icon-link:nth-child(5):hover { background: #00b5ad; color: #fff; box-shadow: 6px 6px 0 #008f8a; } /* stand.fm */
-.social-icon-link:nth-child(6):hover { background: #41c9b4; color: #fff; box-shadow: 6px 6px 0 #288c7d; } /* note */
-.social-icon-link:nth-child(7):hover { background: #ff6719; color: #fff; box-shadow: 6px 6px 0 #d45514; } /* Substack */
+.social-icon-link:nth-child(1) { background: #000; color: #fff; border-color: #000; } /* X */
+.social-icon-link:nth-child(2) { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; border-color: #E4405F; } /* Instagram */
+.social-icon-link:nth-child(3) { background: #FF0000; color: #fff; border-color: #FF0000; } /* YouTube */
+.social-icon-link:nth-child(4) { background: #000; color: #fff; border-color: #000; } /* TikTok */
+.social-icon-link:nth-child(5) { background: #00b5ad; color: #fff; border-color: #00b5ad; } /* stand.fm */
+.social-icon-link:nth-child(6) { background: #41c9b4; color: #fff; border-color: #41c9b4; } /* note */
+.social-icon-link:nth-child(7) { background: #ff6719; color: #fff; border-color: #ff6719; } /* Substack */
+
+/* Individual icon hover effects */
+.social-icon-link:hover {
+    transform: translateY(-6px) rotate(5deg) scale(1.1) !important;
+    box-shadow: 6px 6px 0 var(--color-text-dark) !important;
+    filter: brightness(1.1);
+}
+
+/* LINE Button Style */
+.hero-line-link-wrap {
+    margin: 0.5rem 0 0.5rem;
+    z-index: 20;
+}
+
+.line-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #06C755;
+    color: #fff;
+    padding: 0.8rem 2.5rem;
+    border-radius: 50px;
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    text-decoration: none;
+    border: 3px solid var(--color-text-dark);
+    box-shadow: 6px 6px 0 var(--color-text-dark);
+    transform: rotate(-2deg);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.line-btn:hover {
+    transform: rotate(0deg) scale(1.05);
+    background: #05b34c;
+    box-shadow: 8px 8px 0 var(--color-text-dark);
+    color: #fff;
+}
+
+.line-btn i {
+    font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+    .hero-line-link-wrap {
+        margin: 0.5rem 0 0.8rem;
+    }
+    .line-btn {
+        font-size: 1.1rem;
+        padding: 0.6rem 1.8rem;
+    }
+    .line-btn i {
+        font-size: 1.6rem;
+    }
+}
 
 /* ===================== */
 /* Store Section         */
