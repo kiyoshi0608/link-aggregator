@@ -34,8 +34,11 @@ html {
 body {
     font-family: var(--font-base);
     background-color: var(--color-bg-primary);
-    background-image: radial-gradient(var(--color-gray) 2px, transparent 2px);
-    background-size: 24px 24px;
+    background-image: url('media/背景2.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: var(--color-text-dark);
     line-height: 1.6;
     overflow-x: hidden;

@@ -75,13 +75,7 @@ function updateNewsFeed(data) {
 
 // Dynamic Live Schedule
 const liveData = [
-    {
-        date: '2026.04.25',
-        day: 'SAT',
-        title: 'CAMP ROCK FRIENDS vol.6',
-        venue: '奈良 OIWAKE PARK',
-        ticket: 'https://crf.official.ec/'
-    },
+
     {
         date: '2026.05.09',
         day: 'SAT',
