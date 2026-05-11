@@ -77,16 +77,6 @@ function updateNewsFeed(data) {
 const liveData = [
 
     {
-        date: '2026.05.09',
-        day: 'SAT',
-        title: 'みみみ食堂の美味しん坊！万才 『Master Garden』',
-        venue: '神戸 スペースドッグ！2nd',
-        performer: '出演: みみみ食堂 / キヨシ(SABOTEN)',
-        info: 'OPEN 14:30 / START 15:00<br>¥2500 (+1D別) / 定員: 20名<br>YouTubeにて無料配信あり',
-        note: '現在予約受付中！🍚🔥',
-        ticket: 'https://sabotenrock.com/live/%e3%81%bf%e3%81%bf%e3%81%bf%e9%a3%9f%e5%a0%82%e3%81%ae%e7%be%8e%e5%91%b3%e3%81%97%e3%82%93%e5%9d%8a%ef%bc%81%e4%b8%87%e6%89%8d-%e3%80%8emaster-garden%e3%80%8f/'
-    },
-    {
         date: '2026.05.21',
         day: 'THU',
         title: '山本アキラ×太陽と虎<br>「他が為ハ自が為」-太陽と虎編-',
