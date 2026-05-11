@@ -680,6 +680,7 @@ body {
 .social-icon-link:nth-child(5) { background: #00b5ad; color: #fff; border-color: #00b5ad; } /* stand.fm */
 .social-icon-link:nth-child(6) { background: #41c9b4; color: #fff; border-color: #41c9b4; } /* note */
 .social-icon-link:nth-child(7) { background: #ff6719; color: #fff; border-color: #ff6719; } /* Substack */
+.social-icon-link:nth-child(8) { background: #3388ff; color: #fff; border-color: #3388ff; } /* STORE */
 
 /* Individual icon hover effects */
 .social-icon-link:hover {
